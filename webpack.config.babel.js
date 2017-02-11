@@ -58,8 +58,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',
-            title: 'Vocab'
+            template: './src/index.html'
         }), 
         new ExtractTextPlugin('bundle.css'),
         new webpack.optimize.UglifyJsPlugin({
