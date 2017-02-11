@@ -1,0 +1,38 @@
+{
+  "name": "Vocab-builder",
+  "version": "1.0.0",
+  "description": "A vocabulary building tool",
+  "main": "index.js",
+  "repository": "https://github.com/MikeDigitize/Vocab-builder",
+  "author": "Mike Chadwick <chad_01@hotmail.co.uk>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-latest": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.26.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.10.0",
+    "html-webpack-plugin": "^2.28.0",
+    "localforage": "^1.4.3",
+    "node-sass": "^4.5.0",
+    "optimize-css-assets-webpack-plugin": "^1.3.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "react-router-dom": "next",
+    "redux": "^3.6.0",
+    "sass-loader": "^5.0.1",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "webpack-dev-server": "^2.3.0"
+  }
+}
