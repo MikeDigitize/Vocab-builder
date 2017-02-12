@@ -6,6 +6,34 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 
+let webpackPlugins = [
+    new HtmlWebpackPlugin({
+        template: './src/index.html'
+    }), 
+    new ExtractTextPlugin('bundle.css'),
+    new CopyWebpackPlugin([{
+        context: './src/images',
+        from: '**/*.jpg',
+        to: './images'
+    }, {
+        context: './src',
+        from: '**/*.css',
+        to: './'
+    }]),
+    new OptimizeCssAssetsPlugin({
+        assetNameRegExp: /\.css$/g,
+        cssProcessorOptions: { discardComments: { removeAll: true } }
+    })
+];
+
+if(process.env.NODE_ENV === 'production') {
+    webpackPlugins.push(
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true
+        })
+    );
+}
+
 module.exports = {
     devtool: 'source-map',
     devServer: {
@@ -58,32 +86,6 @@ module.exports = {
             }
         }]
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/index.html'
-        }), 
-        new ExtractTextPlugin('bundle.css'),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true
-        }),
-        new webpack.DefinePlugin({
-            'process.env': { 
-                NODE_ENV: JSON.stringify('production') 
-            }
-        }),
-        new CopyWebpackPlugin([{
-            context: './src/images',
-            from: '**/*.jpg',
-            to: './images'
-        }, {
-            context: './src',
-            from: '**/*.css',
-            to: './'
-        }]),
-        new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.css$/g,
-            cssProcessorOptions: { discardComments: { removeAll: true } }
-        })
-    ],
+    plugins: webpackPlugins,
     watch : true
 };

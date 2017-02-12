@@ -19,7 +19,7 @@ const Modal = () => (
 				</div>
 				<div className="col-sm-8 offset-sm-2">
 					<div className="form-group">
-						<label for="definition">Add a definition</label>
+						<label htmlFor="definition">Add a definition</label>
 						<textarea 
 							className="form-control" 
 							id="definition" 
@@ -36,7 +36,7 @@ const Modal = () => (
 				</div>
 				<div className="col-sm-8 offset-sm-2">
 					<div className="form-group">
-						<label for="synonyms">Synonyms</label>
+						<label htmlFor="synonyms">Synonyms</label>
 							<input 
 								type="text" 
 								className="form-control" 
@@ -62,12 +62,12 @@ const Modal = () => (
 	</div>
 );
 
-// Modal.propTypes = {
-//   onModalClose: PropTypes.func.isRequired,
-//	 onListen: PropTypes.func.isRequired,
-//	 onEditWord: PropTypes.func.isRequired,
-//   onInputChange: PropTypes.func.isRequired,
-//   currentWord: PropTypes.string.isRequired,
-// };
+Modal.propTypes = {
+  onModalClose: PropTypes.func,
+	onListen: PropTypes.func,
+	onEditWord: PropTypes.func,
+  onInputChange: PropTypes.func,
+  currentWord: PropTypes.string
+};
 
 export default Modal;

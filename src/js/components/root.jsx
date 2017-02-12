@@ -15,16 +15,16 @@ const Root = () => (
     <div className="container">
       <div className="row">
         <div className="col-xl-6 offset-xl-3">
-          <Link className={`${styles.navLink}`} to="/">Home</Link>
-          <Link className={`${styles.navLink}`} to="/edit">Edit</Link>
+          <Link className={ `${styles.navLink}` } to="/">Home</Link>
+          <Link className={ `${styles.navLink}` } to="/edit">Edit</Link>
         </div>
       </div>
 
       <Switch>
-	      <Route exact path="/" component={ Home }/>
-	      <Route path="/edit" component={ Edit }/>
-	      <Route component={ NotFound }/>
-	    </Switch>
+        <Route exact path="/" component={ Home }/>
+        <Route path="/edit" component={ Edit }/>
+        <Route component={ NotFound }/>
+      </Switch>
     </div>
   </Router>
 );

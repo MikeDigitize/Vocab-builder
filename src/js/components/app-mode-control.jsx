@@ -1,28 +1,30 @@
 import React, { PropTypes } from 'react';
+import TextInput from './text-input';
 import styles from '../../scss/app-mode-control';
 
-const AppModeControl = () => (
-  <div className={`${styles.modeControlHolder}`}>       
-    <span 
-      data-mode="save" 
-      className={`${styles.modeBtn} ${styles.save}`}>
-      Save
-    </span>
-    <h1 className="title">Vocab</h1>
-    <span 
-      data-mode="search" 
-      className={`${styles.modeBtn} ${styles.search}`}>
-      Search
-    </span> 
+const AppModeControl = ({ onChangeMode, mode }) => (
+  <div>
+    <div className={`${styles.modeControlHolder}`}>       
+      <span 
+        data-mode="save" 
+        className={`${styles.modeBtn} ${styles.save}`}
+        onClick={ () => onChangeMode('save') }>
+        Save
+      </span>
+      <h1 className="title">Vocab</h1>
+      <span 
+        data-mode="search" 
+        className={`${styles.modeBtn} ${styles.search}`}
+        onClick={ () => onChangeMode('search') }>
+        Search
+      </span> 
+    </div>
+    <TextInput mode={ mode } />
   </div>
-);
+)
 
-// AppModeControl.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-//   onInputChange: PropTypes.func.isRequired,
-//   textInputState: PropTypes.string.isRequired,
-//   currentWord: PropTypes.string.isRequired,
-//   currentSearchTerm: PropTypes.string.isRequired
-// };
+AppModeControl.propTypes = {
+  onChangeMode: PropTypes.func.isRequired
+};
 
 export default AppModeControl;
