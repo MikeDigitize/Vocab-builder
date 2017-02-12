@@ -5,8 +5,8 @@ import {
   Link,
   Switch
 } from 'react-router-dom';
-import Home from './home';
-import Edit from './edit-vocab';
+import HomeContainer from './home-container';
+import EditContainer from './edit-container';
 import NotFound from './404';
 import styles from '../../scss/nav';
 
@@ -21,8 +21,8 @@ const Root = () => (
       </div>
 
       <Switch>
-        <Route exact path="/" component={ Home }/>
-        <Route path="/edit" component={ Edit }/>
+        <Route exact path="/" component={ HomeContainer }/>
+        <Route path="/edit" component={ EditContainer }/>
         <Route component={ NotFound }/>
       </Switch>
     </div>

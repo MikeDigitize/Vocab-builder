@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
-const Edit = () => (
+const Edit = ({ mode }) => (
   <div>
-    <h2>Edit Vocab</h2>
+    <h2>Edit Vocab { mode }</h2>
   </div>
 );
 

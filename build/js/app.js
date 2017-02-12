@@ -11290,33 +11290,64 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRedux = __webpack_require__(64);
+var _react = __webpack_require__(4);
 
-var _globalActions = __webpack_require__(65);
+var _react2 = _interopRequireDefault(_react);
 
-var _appModeControl = __webpack_require__(112);
+var _textInput = __webpack_require__(116);
+
+var _textInput2 = _interopRequireDefault(_textInput);
+
+var _appModeControl = __webpack_require__(118);
 
 var _appModeControl2 = _interopRequireDefault(_appModeControl);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
-  return {
-    mode: state.mode
-  };
+var AppModeControl = function AppModeControl(_ref) {
+  var onChangeMode = _ref.onChangeMode,
+      mode = _ref.mode;
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'div',
+      { className: '' + _appModeControl2.default.modeControlHolder },
+      _react2.default.createElement(
+        'span',
+        {
+          'data-mode': 'save',
+          className: _appModeControl2.default.modeBtn + ' ' + _appModeControl2.default.save,
+          onClick: function onClick() {
+            return onChangeMode('save');
+          } },
+        'Save'
+      ),
+      _react2.default.createElement(
+        'h1',
+        { className: 'title' },
+        'Vocab'
+      ),
+      _react2.default.createElement(
+        'span',
+        {
+          'data-mode': 'search',
+          className: _appModeControl2.default.modeBtn + ' ' + _appModeControl2.default.search,
+          onClick: function onClick() {
+            return onChangeMode('search');
+          } },
+        'Search'
+      )
+    ),
+    _react2.default.createElement(_textInput2.default, { mode: mode })
+  );
 };
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-  return {
-    onChangeMode: function onChangeMode(mode) {
-      dispatch((0, _globalActions.onModeChange)(mode));
-    }
-  };
+AppModeControl.propTypes = {
+  onChangeMode: _react.PropTypes.func.isRequired
 };
 
-var ModeControlContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_appModeControl2.default);
-
-exports.default = ModeControlContainer;
+exports.default = AppModeControl;
 
 /***/ }),
 /* 112 */
@@ -11329,49 +11360,33 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = __webpack_require__(4);
+var _reactRedux = __webpack_require__(64);
 
-var _react2 = _interopRequireDefault(_react);
+var _globalActions = __webpack_require__(65);
 
-var _appModeControl = __webpack_require__(118);
+var _appModeControl = __webpack_require__(111);
 
 var _appModeControl2 = _interopRequireDefault(_appModeControl);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var AppModeControl = function AppModeControl(mode) {
-  return _react2.default.createElement(
-    'div',
-    { className: '' + _appModeControl2.default.modeControlHolder },
-    _react2.default.createElement(
-      'span',
-      {
-        'data-mode': 'save',
-        className: _appModeControl2.default.modeBtn + ' ' + _appModeControl2.default.save
-      },
-      'Save'
-    ),
-    _react2.default.createElement(
-      'h1',
-      { className: 'title' },
-      mode
-    ),
-    _react2.default.createElement(
-      'span',
-      {
-        'data-mode': 'search',
-        className: _appModeControl2.default.modeBtn + ' ' + _appModeControl2.default.search
-      },
-      'Search'
-    )
-  );
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    mode: state.globals.mode
+  };
 };
 
-// AppModeControl.propTypes = {
-//   onChangeMode: PropTypes.func.isRequired
-// };
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    onChangeMode: function onChangeMode(mode) {
+      dispatch((0, _globalActions.onModeChange)(mode));
+    }
+  };
+};
 
-exports.default = AppModeControl;
+var Container = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_appModeControl2.default);
+
+exports.default = Container;
 
 /***/ }),
 /* 113 */
@@ -11419,13 +11434,9 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _appModeControlContainer = __webpack_require__(111);
+var _container = __webpack_require__(112);
 
-var _appModeControlContainer2 = _interopRequireDefault(_appModeControlContainer);
-
-var _textInput = __webpack_require__(116);
-
-var _textInput2 = _interopRequireDefault(_textInput);
+var _container2 = _interopRequireDefault(_container);
 
 var _modal = __webpack_require__(115);
 
@@ -11437,8 +11448,7 @@ var Home = function Home() {
   return _react2.default.createElement(
     'div',
     { className: 'col-xl-6 offset-xl-3' },
-    _react2.default.createElement(_appModeControlContainer2.default, null),
-    _react2.default.createElement(_textInput2.default, null),
+    _react2.default.createElement(_container2.default, null),
     _react2.default.createElement(_modal2.default, null)
   );
 };
@@ -11510,7 +11520,7 @@ var Modal = function Modal() {
 						{ className: 'form-group' },
 						_react2.default.createElement(
 							'label',
-							{ 'for': 'definition' },
+							{ htmlFor: 'definition' },
 							'Add a definition'
 						),
 						_react2.default.createElement('textarea', {
@@ -11536,7 +11546,7 @@ var Modal = function Modal() {
 						{ className: 'form-group' },
 						_react2.default.createElement(
 							'label',
-							{ 'for': 'synonyms' },
+							{ htmlFor: 'synonyms' },
 							'Synonyms'
 						),
 						_react2.default.createElement('input', {
@@ -11567,13 +11577,13 @@ var Modal = function Modal() {
 	);
 };
 
-// Modal.propTypes = {
-//   onModalClose: PropTypes.func.isRequired,
-//	 onListen: PropTypes.func.isRequired,
-//	 onEditWord: PropTypes.func.isRequired,
-//   onInputChange: PropTypes.func.isRequired,
-//   currentWord: PropTypes.string.isRequired,
-// };
+Modal.propTypes = {
+	onModalClose: _react.PropTypes.func,
+	onListen: _react.PropTypes.func,
+	onEditWord: _react.PropTypes.func,
+	onInputChange: _react.PropTypes.func,
+	currentWord: _react.PropTypes.string
+};
 
 exports.default = Modal;
 
@@ -11598,7 +11608,9 @@ var _textInput2 = _interopRequireDefault(_textInput);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TextInput = function TextInput() {
+var TextInput = function TextInput(_ref) {
+  var mode = _ref.mode;
+
   return _react2.default.createElement(
     'div',
     null,
@@ -11621,18 +11633,19 @@ var TextInput = function TextInput() {
     _react2.default.createElement(
       'h2',
       { className: '' + _textInput2.default.modeText },
-      'Save Mode'
+      mode,
+      ' Mode'
     )
   );
 };
 
-// TextInput.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-//   onInputChange: PropTypes.func.isRequired,
-//   textInputState: PropTypes.string.isRequired,
-//   currentWord: PropTypes.string.isRequired,
-//   currentSearchTerm: PropTypes.string.isRequired
-// };
+TextInput.propTypes = {
+  onSubmit: _react.PropTypes.func,
+  onInputChange: _react.PropTypes.func,
+  mode: _react.PropTypes.string.isRequired,
+  currentWord: _react.PropTypes.string,
+  currentSearchTerm: _react.PropTypes.string
+};
 
 exports.default = TextInput;
 
