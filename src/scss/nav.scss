@@ -1,0 +1,17 @@
+@import 'variables';
+
+.navLink {
+	margin-right: 10px;
+	color: darken($bg, 35%);
+	transition: color 1s ease-out;
+	&:hover {
+		text-decoration: none;
+		color: darken($bg, 25%);
+	}
+	&:first-child {
+		float: left;
+	}
+	&:last-child {
+		float: right;
+	}
+}

@@ -32,17 +32,19 @@ module.exports = {
         rules: [{
             test: /\.jsx$|\.js$/,
             exclude: /node_modules/,
-            loader: 'babel-loader',
-            options: {
-                presets: [
-                    ['latest', { modules: false }], 
-                    ['react']
-                ]
-            }
+            use: {
+                loader : 'babel-loader',
+                options: {
+                    presets: [
+                        ['latest', { modules: false }], 
+                        ['react']
+                    ]
+                }
+            }            
         }, {
             test: /\.scss$/,
-            loader: ExtractTextPlugin.extract({
-                fallbackLoader: 'style-loader',
+            use: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
                 loader: 'css-loader?modules!sass-loader'
             })
         }, {

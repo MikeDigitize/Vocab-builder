@@ -1,0 +1,56 @@
+@import 'variables';
+@import 'functions';
+@import 'mixins';
+
+:global(.form-inline .form-control.text-input) {
+	margin-top: 12px;
+    height: 75px;
+    font-size: 40px;
+    text-align: center;
+    box-shadow: $box-shadow;
+    position: relative;
+    border: 2px solid $bg;
+    width: 80%;
+    &:active {
+    	border: 1px solid darken($bg, 10%);
+    }
+    &:focus {
+    	border: 1px solid darken($bg, 10%);
+    }
+    &::-webkit-input-placeholder {
+	  color: darken($bg, 20%);
+	  font-style: italic;
+	}
+    &::-moz-placeholder {
+      color: darken($bg, 20%);
+      font-style: italic;
+    }
+    &:global(.text-search) {
+        margin: 12px auto 0;
+    }
+}
+
+
+:global(.submit-btn) {
+	height: 75px;
+    margin-top: 14px;
+    width: 20%;
+    box-shadow: $box-shadow;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.3s ease-in;
+    background-color: lighten($btn-color, 15%);
+    border: 1px solid $btn-color;
+    &:hover {
+    	background-color: lighten($btn-color, 20%);
+    	border: 1px solid lighten($btn-color, 20%);
+    }
+}
+
+.modeText {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+    text-transform: capitalize;
+    color: darken($bg, 25%);
+}

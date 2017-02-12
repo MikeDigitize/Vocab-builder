@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Root from './components/root';
+import '../scss/global';
 
-ReactDOM.render(<div><h1>We are working!</h1></div>, document.getElementById('vocab'));
+ReactDOM.render(<Root />, document.getElementById('vocab'));

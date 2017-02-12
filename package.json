@@ -7,7 +7,8 @@
   "author": "Mike Chadwick <chad_01@hotmail.co.uk>",
   "license": "MIT",
   "scripts": {
-    "build": "webpack-dev-server"
+    "build": "parallelshell \"node index.js\" \"webpack\"",
+    "dev-server": "webpack-dev-server --inline"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
@@ -32,13 +33,15 @@
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1"
   },
+  "dependencies": {
+    "express": "^4.14.1",
+    "parallelshell": "^2.0.0",
+    "webpack-dev-server": "^2.3.0"
+  },
   "babel": {
     "presets": [
       "latest",
       "react"
     ]
-  },
-  "dependencies": {
-    "webpack-dev-server": "^2.3.0"
   }
 }
