@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import VocabDatabase from '../utils/database';
 import { globalDispatchers } from '../actions/global-actions';
 import { saveItemDispatchers } from '../actions/save-item-actions';
 import { databaseDispatchers } from '../actions/database-actions';
+import VocabDatabase from '../utils/database';
 import Home from './home';
 
 function mapStateToProps(state) {

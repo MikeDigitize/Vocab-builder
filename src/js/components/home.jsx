@@ -26,7 +26,8 @@ export default class Home extends Component {
 			wordCount,
 			lastSavedWord,
 			searchResults,
-			isSearching } = this.props;
+			isSearching,
+			onSearch } = this.props;
 
 		if(isAppDataLoaded) {
 			return (
@@ -38,6 +39,7 @@ export default class Home extends Component {
 			    	saveItem={ saveItem } 
 			    	searchItem={ searchItem } 
 			    	onSubmitItem={ onSubmitItem }
+			    	onSearch={ onSearch }
 			    />
 			    <Results 
 			    	wordCount={ wordCount }
@@ -74,5 +76,6 @@ Home.propTypes = {
   wordCount: PropTypes.number.isRequired,
   lastSavedWord: PropTypes.string.isRequired,
   searchResults: PropTypes.array.isRequired,
-  isSearching: PropTypes.bool.isRequired
+  isSearching: PropTypes.bool.isRequired,
+  onSearch: PropTypes.func.isRequired
 };

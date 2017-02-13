@@ -1,4 +1,7 @@
-import { ON_APP_DATA_LOADED, ON_ITEM_SAVED } from '../actions/database-actions';
+import { 
+  ON_APP_DATA_LOADED, 
+  ON_ITEM_SAVED,
+  ON_SEARCH_RESULTS } from '../actions/database-actions';
 
 let initialState = {
     lastSavedWord: '',
@@ -20,6 +23,11 @@ export default function database(state = initialState, action) {
       return Object.assign({}, state, {
         wordCount: ++state.wordCount,
         lastSavedWord: action.savedItem
+      });
+    case ON_SEARCH_RESULTS: 
+      return Object.assign({}, state, {
+        searchResults: action.data.searchResults,
+        isSearching: action.data.isSearching
       });
     default:
       return state

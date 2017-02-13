@@ -12,6 +12,14 @@ export default class TextInput extends Component {
   focus() {
     this.refs.input.focus();
   }
+  onChange(evt) {
+    let { mode, onUserInput, onSearch } = this.props;
+    let { value } = evt.target;
+    onUserInput(value);
+    if(mode === 'search') {
+      onSearch(value);
+    }
+  }
   onSubmit() {
     let { value } = this.refs.input;
     if(testWordLength(value, 2)) {
@@ -22,7 +30,7 @@ export default class TextInput extends Component {
     }    
   }
   render() {
-    let { mode, onUserInput, saveItem, searchItem } = this.props;
+    let { mode, saveItem, searchItem } = this.props;
     return (
       <div>
         <div className="form-inline">
@@ -32,7 +40,7 @@ export default class TextInput extends Component {
             ref="input"
             maxLength="25"
             value={ mode === 'save' ? saveItem : searchItem }
-            onChange={ evt => onUserInput(evt.target.value) }
+            onChange={ this.onChange.bind(this) }
             placeholder={ mode === 'save' ? 'Save word...' : 'Search for...'}
           />
           { mode === 'save' && 
@@ -55,5 +63,6 @@ TextInput.propTypes = {
   onUserInput: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired,
   saveItem: PropTypes.string.isRequired,
-  searchItem: PropTypes.string.isRequired
+  searchItem: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired
 };

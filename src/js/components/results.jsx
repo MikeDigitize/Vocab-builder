@@ -16,7 +16,7 @@ const Results = ({ wordCount, lastSavedWord, mode, searchResults, isSearching })
 						{ isSearching && !searchResults.length ?
 							<p>Sorry! No results found.</p> :
 							<ul>
-								{ searchResults.map(result => <li>{ result }<span><br /></span></li>) }
+								{ searchResults.map((result, i) => <li key={i}>{ result.word }<span><br /></span></li>) }
 							</ul>
 						}						
 					</div> 

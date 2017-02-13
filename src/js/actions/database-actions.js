@@ -14,6 +14,12 @@ export function onItemSaved(savedItem) {
 	return { type: ON_ITEM_SAVED, savedItem };
 }
 
+export const ON_SEARCH_RESULTS = 'ON_SEARCH_RESULTS';
+
+export function onSearchResults(data) {
+	return { type: ON_SEARCH_RESULTS, data };
+}
+
 export function databaseDispatchers(dispatch) {
 	return {
 		onAppInitialise() {
@@ -44,6 +50,25 @@ export function databaseDispatchers(dispatch) {
         dispatch(onItemSaved(latestWord));
         dispatch(onUserInput(''));
       });
-    }
+    },
+    onSearch(searchItem) {
+			let searchResults = [];
+			function onDatabaseSearched() {
+				const isSearching = !!searchItem.length; 
+				dispatch(onSearchResults({ searchResults, isSearching }));
+			}
+			if(searchItem.length) {
+				VocabDatabase.iterate(function(data, word) {
+					const find = new RegExp(`^${searchItem}`, 'i');
+					if(word.match(find)) {
+						searchResults.push({ word, data });
+					}
+				})
+				.then(onDatabaseSearched);
+			}
+			else {
+				onDatabaseSearched();
+			}			
+		}
 	}
 }
