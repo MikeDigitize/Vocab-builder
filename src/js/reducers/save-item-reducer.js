@@ -1,4 +1,4 @@
-import { ON_MODAL_VISIBILITY_CHANGE } from '../actions/save-term-actions';
+import { ON_MODAL_VISIBILITY_CHANGE } from '../actions/save-item-actions';
 
 let initialState = {
 	isModalVisible: false

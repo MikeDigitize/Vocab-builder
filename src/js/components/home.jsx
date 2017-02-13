@@ -18,7 +18,7 @@ export default class Home extends Component {
 			onUserInput, 
 			saveItem, 
 			searchItem, 
-			onSubmitWord,
+			onSubmitItem,
 			isModalVisible,
 			onModalClose,
 			onItemSave,
@@ -37,7 +37,7 @@ export default class Home extends Component {
 			    	onUserInput={ onUserInput } 
 			    	saveItem={ saveItem } 
 			    	searchItem={ searchItem } 
-			    	onSubmitWord={ onSubmitWord }
+			    	onSubmitItem={ onSubmitItem }
 			    />
 			    <Results 
 			    	wordCount={ wordCount }
@@ -66,7 +66,7 @@ Home.propTypes = {
 	onUserInput: PropTypes.func.isRequired,
   saveItem: PropTypes.string.isRequired,
   searchItem: PropTypes.string.isRequired,
-  onSubmitWord: PropTypes.func.isRequired,
+  onSubmitItem: PropTypes.func.isRequired,
   isModalVisible: PropTypes.bool.isRequired,
   onModalClose: PropTypes.func.isRequired,
 	onItemSave: PropTypes.func.isRequired,

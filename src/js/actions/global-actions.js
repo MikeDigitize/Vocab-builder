@@ -9,3 +9,14 @@ export const ON_USER_INPUT = 'ON_USER_INPUT';
 export function onUserInput(value) {
 	return { type : ON_USER_INPUT, value };
 }
+
+export function globalDispatchers(dispatch) {
+	return {
+		onChangeMode(mode) {
+      dispatch(onModeChange(mode));
+    },
+    onUserInput(value) {
+      dispatch(onUserInput(value));
+    }
+	}
+}

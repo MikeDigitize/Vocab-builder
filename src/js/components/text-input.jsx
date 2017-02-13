@@ -15,7 +15,7 @@ export default class TextInput extends Component {
   onSubmit() {
     let { value } = this.refs.input;
     if(testWordLength(value, 2)) {
-      this.props.onSubmitWord();
+      this.props.onSubmitItem();
     }
     else {
       this.focus();
@@ -51,7 +51,7 @@ export default class TextInput extends Component {
 }
 
 TextInput.propTypes = {
-  onSubmitWord: PropTypes.func.isRequired,
+  onSubmitItem: PropTypes.func.isRequired,
   onUserInput: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired,
   saveItem: PropTypes.string.isRequired,

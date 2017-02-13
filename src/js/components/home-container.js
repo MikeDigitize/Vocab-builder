@@ -1,11 +1,8 @@
 import { connect } from 'react-redux';
-import { 
-  onModeChange, 
-  onUserInput 
-} from '../actions/global-actions';
 import VocabDatabase from '../utils/database';
-import { onModalVisibilityChange } from '../actions/save-term-actions';
-import { onAppDataLoaded, onItemSaved } from '../actions/database-actions';
+import { globalDispatchers } from '../actions/global-actions';
+import { saveItemDispatchers } from '../actions/save-item-actions';
+import { databaseDispatchers } from '../actions/database-actions';
 import Home from './home';
 
 function mapStateToProps(state) {
@@ -22,50 +19,18 @@ function mapStateToProps(state) {
   };
 };
 
-function mapDispatchToProps(dispatch, ownProps) {
-  return {
-    onAppInitialise() {
-      let lastSavedWord = '';
-      VocabDatabase.iterate(function(data, word) {
-        if(data.isLatestWord) {
-          lastSavedWord = word;
-        }
-      })
-      .then(() => VocabDatabase.keys())
-      .then(function(keys) {
-        const wordCount = keys.length;  
-        dispatch(onAppDataLoaded({ wordCount, lastSavedWord }));          
-      });
-    },
-    onChangeMode(mode) {
-      dispatch(onModeChange(mode));
-    },
-    onUserInput(value) {
-      dispatch(onUserInput(value));
-    },
-    onSubmitWord() {
-      dispatch(onModalVisibilityChange(true));
-    },
-    onModalClose() {
-      dispatch(onModalVisibilityChange(false));
-    },
-    onItemSave(item) {
-      let latestWord = Object.keys(item)[0];
-      item[latestWord].isLatestWord = true;
-      VocabDatabase.iterate(function(data, word) {
-        if(data.isLatestWord) {
-          data.isLatestWord = false;
-          VocabDatabase.set(word, data);
-        }
-      })
-      .then(() => VocabDatabase.set(latestWord, item[latestWord]))
-      .then(function() {
-        dispatch(onModalVisibilityChange(false));
-        dispatch(onItemSaved(latestWord));
-        dispatch(onUserInput(''));
-      });
-    }
-  }
+function combineDispatchers(...dispatchers) {
+  return dispatchers.reduce(function(combined, dispatcher) {
+    return Object.assign(combined, dispatcher);
+  }, {});
+}
+
+function mapDispatchToProps(dispatch) {
+  return combineDispatchers(
+    globalDispatchers(dispatch),
+    saveItemDispatchers(dispatch),
+    databaseDispatchers(dispatch)
+  );
 };
 
 const HomeContainer = connect(
