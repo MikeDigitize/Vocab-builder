@@ -3,33 +3,54 @@ import {
   onModeChange, 
   onUserInput 
 } from '../actions/global-actions';
+import VocabDatabase from '../utils/database';
 import { onModalVisibilityChange } from '../actions/save-term-actions';
+import { onAppDataLoaded } from '../actions/database-actions';
 import Home from './home';
 
 function mapStateToProps(state) {
   return {
     mode: state.globals.mode,
-    saveTerm: state.globals.saveTerm,
-    searchTerm: state.globals.searchTerm,
-    isModalVisible: state.saveTerm.isModalVisible
+    saveItem: state.globals.saveItem,
+    searchItem: state.globals.searchItem,
+    isModalVisible: state.saveItem.isModalVisible,
+    lastSavedWord: state.database.lastSavedWord,
+    wordCount: state.database.wordCount,
+    searchResults: state.database.searchResults,
+    isSearching: state.database.isSearching,
+    isAppDataLoaded: state.database.isAppDataLoaded
   };
 };
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    onChangeMode: function(mode) {
+    onAppInitialise() {
+      let lastSavedWord = '';
+      //VocabDatabase.removeAll();
+      VocabDatabase.iterate(function(data, word) {
+        if(data.isLatestWord) {
+          lastSavedWord = word;
+        }
+      })
+      .then(() => VocabDatabase.keys())
+      .then(function(keys) {
+        const wordCount = keys.length;  
+        dispatch(onAppDataLoaded({ wordCount, lastSavedWord }));          
+      });
+    },
+    onChangeMode(mode) {
       dispatch(onModeChange(mode));
     },
-    onUserInput: function(value) {
+    onUserInput(value) {
       dispatch(onUserInput(value));
     },
-    onSubmitWord: function() {
+    onSubmitWord() {
       dispatch(onModalVisibilityChange(true));
     },
-    onModalClose: function() {
+    onModalClose() {
       dispatch(onModalVisibilityChange(false));
     },
-    onTermSave: function(term) {
+    onTermSave(term) {
       console.log('term!', term);
     }
   }

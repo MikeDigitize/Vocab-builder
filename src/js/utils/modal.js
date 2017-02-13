@@ -1,7 +1,7 @@
 import { testWordLength, removeSpecialChars } from './validation';
 import Speech from '../utils/speech';
 
-export function onEditWord({ edit, currentWord }, { onUserInput, saveTerm }) {
+export function onEditWord({ edit, currentWord }, { onUserInput, saveItem }) {
 	let text = removeSpecialChars(currentWord.textContent);
 	if(edit.getAttribute('data-state') === 'edit') {
 		edit.setAttribute('data-state', 'save');
@@ -13,26 +13,26 @@ export function onEditWord({ edit, currentWord }, { onUserInput, saveTerm }) {
 		edit.setAttribute('data-state', 'edit');
 		edit.textContent = 'edit';
 		currentWord.contentEditable = 'false';
-		if(testWordLength(text, 2) && text !== saveTerm) {
+		if(testWordLength(text, 2) && text !== saveItem) {
 			onUserInput(text);
 		}
 		else {
-			currentWord.textContent = saveTerm;
+			currentWord.textContent = saveItem;
 		}
 	}
 }
 
 let preventSpeech = false;
-export function onListen({ saveTerm }) {
+export function onListen({ saveItem }) {
 	if(!preventSpeech) {
 		preventSpeech = true;
-		let talk = new Speech(saveTerm);
+		let talk = new Speech(saveItem);
 		talk.speech.onend = () => preventSpeech = false;
 		talk.speak();
 	}
 }
 
-export function onSave({ definition, synonyms }, { saveTerm, onTermSave }) {
+export function onSave({ definition, synonyms }, { saveItem, onTermSave }) {
 	let definitionValue = definition.value.trim();
 	let synonymsValue = synonyms.value;
 	if(testWordLength(definitionValue, 5)) {
@@ -43,7 +43,7 @@ export function onSave({ definition, synonyms }, { saveTerm, onTermSave }) {
 			synonyms = [];
 		}
 		let data = {};
-		data[saveTerm] = {
+		data[saveItem] = {
 			definition: definitionValue,
 			synonyms: synonymsValue ? synonymsValue : []
 		};
@@ -74,9 +74,9 @@ export function toggleModal({ modal, overlay }, { isModalVisible }) {
 	}
 }
 
-export function onModalClose({ edit }, { saveTerm, onModalClose }, onEditWord) {
+export function onModalClose({ edit }, { saveItem, onModalClose }, onEditWord) {
 	if(edit.getAttribute('data-state') === 'save') {
-		edit.textContent = saveTerm;
+		edit.textContent = saveItem;
 		onEditWord();
 	}
 	onModalClose();		

@@ -1,12 +1,10 @@
-import { 
-	ON_MODAL_VISIBILITY_CHANGE
-} from '../actions/save-term-actions';
+import { ON_MODAL_VISIBILITY_CHANGE } from '../actions/save-term-actions';
 
-const initialState = {
+let initialState = {
 	isModalVisible: false
 };
 
-export default function saveTerm(state = initialState, action) {
+export default function saveItem(state = initialState, action) {
   switch (action.type) {
     case ON_MODAL_VISIBILITY_CHANGE:
       return Object.assign({}, state, {

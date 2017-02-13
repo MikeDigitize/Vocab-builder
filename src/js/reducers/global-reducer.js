@@ -4,10 +4,10 @@ import {
 } from '../actions/global-actions';
 import { removeSpecialChars } from '../utils/validation';
 
-const initialState = {
+let initialState = {
 	mode: 'save',
-	saveTerm: '',
-	searchTerm: ''
+	saveItem: '',
+	searchItem: ''
 };
 
 export default function globals(state = initialState, action) {
@@ -20,11 +20,11 @@ export default function globals(state = initialState, action) {
     	switch(state.mode) {
     		case 'save':
     			return Object.assign({}, state, {
-		        saveTerm: removeSpecialChars(action.value).toLowerCase()
+		        saveItem: removeSpecialChars(action.value).toLowerCase()
 		      });
     		case 'search':
     			return Object.assign({}, state, {
-		        searchTerm: removeSpecialChars(action.value).toLowerCase()
+		        searchItem: removeSpecialChars(action.value).toLowerCase()
 		      });
     	}
     default:

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import globals from './global-reducer';
-import saveTerm from './save-term-reducer';
+import saveItem from './save-item-reducer';
+import database from './database-reducer';
 
-const vocabApp = combineReducers({ globals, saveTerm });
+const vocabApp = combineReducers({ globals, saveItem, database });
 export default vocabApp;

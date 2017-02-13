@@ -24,7 +24,7 @@ export default class Modal extends Component {
 		onSave(this.refs, this.props);
 	}
 	render() {
-		let { onModalClose, saveTerm } = this.props;
+		let { onModalClose, saveItem } = this.props;
 		return (
 		  <div className={ `${styles.modalHolder}` }>
 				<div className="vocabModal" ref="modal">	 	
@@ -32,7 +32,7 @@ export default class Modal extends Component {
 					<div className="row">
 						<div className="col-sm-12">
 							<h2> 
-								<span ref="currentWord">{ saveTerm }</span>
+								<span ref="currentWord">{ saveItem }</span>
 								<p
 									data-state="edit"
 									ref="edit"
@@ -52,7 +52,7 @@ export default class Modal extends Component {
 									ref="definition" 
 									rows="3"
 									aria-describedby="definitionHelp" 
-									placeholder={ `Define ${saveTerm}...` }>
+									placeholder={ `Define ${saveItem}...` }>
 								</textarea>
 								<small 
 										id="definitionHelp" 
@@ -70,7 +70,7 @@ export default class Modal extends Component {
 										id="synonyms"
 										ref="synonyms" 
     								aria-describedby="synonymHelp" 
-    								placeholder={ `Synonyms for ${saveTerm}...` }/>
+    								placeholder={ `Synonyms for ${saveItem}...` }/>
 									<small 
 										id="synonymHelp" 
 										className="form-text text-muted">
@@ -81,7 +81,7 @@ export default class Modal extends Component {
 								type="submit" 
 								className="btn btn-primary"
 								onClick={ this.onSave.bind(this) }>
-								Save { saveTerm }
+								Save { saveItem }
 							</button>
 						</div>
 					</div>
@@ -100,5 +100,5 @@ Modal.propTypes = {
   onModalClose: PropTypes.func.isRequired,
   onTermSave: PropTypes.func.isRequired,
 	isModalVisible: PropTypes.bool.isRequired,
-  saveTerm: PropTypes.string.isRequired
+  saveItem: PropTypes.string.isRequired
 };
