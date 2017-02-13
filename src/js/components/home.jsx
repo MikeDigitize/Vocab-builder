@@ -10,7 +10,10 @@ const Home = ({
 	onUserInput, 
 	saveTerm, 
 	searchTerm, 
-	onSubmitWord }) => (
+	onSubmitWord,
+	isModalVisible,
+	onModalClose,
+	onTermSave }) => (
 	  <div className="col-xl-6 offset-xl-3">
 	    <ModeControl onChangeMode={ onChangeMode } />
 	    <TextInput 
@@ -21,7 +24,12 @@ const Home = ({
 	    	onSubmitWord={ onSubmitWord }
 	    />
 	    <Results />
-	    <Modal />
+	    <Modal 
+	    	onModalClose={ onModalClose }
+	    	isModalVisible={ isModalVisible }
+	    	onUserInput={ onUserInput }
+	    	saveTerm={ saveTerm }
+	    	onTermSave={ onTermSave } />
 	  </div>
 );
 

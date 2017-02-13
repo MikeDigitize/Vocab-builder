@@ -3,14 +3,14 @@ import {
 } from '../actions/save-term-actions';
 
 const initialState = {
-	modalVisible: false
+	isModalVisible: false
 };
 
 export default function saveTerm(state = initialState, action) {
   switch (action.type) {
     case ON_MODAL_VISIBILITY_CHANGE:
       return Object.assign({}, state, {
-        modalVisible: action.visible
+        isModalVisible: action.isVisible
       });
     default:
       return state

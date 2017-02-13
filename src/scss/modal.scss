@@ -24,6 +24,13 @@
 	.editWord {
 		font-size: 15px;
 		margin-left: 10px;
+		display: inline;
+		color: $btn-color;
+		text-decoration: underline;
+		cursor: pointer;
+		&:hover {
+			color: lighten($btn-color, 20%);
+		}
 	}
 
 	:global(.modalOverlay) {

@@ -11,7 +11,7 @@ function mapStateToProps(state) {
     mode: state.globals.mode,
     saveTerm: state.globals.saveTerm,
     searchTerm: state.globals.searchTerm,
-    modalVisible: state.saveTerm.modalVisible
+    isModalVisible: state.saveTerm.isModalVisible
   };
 };
 
@@ -20,11 +20,17 @@ function mapDispatchToProps(dispatch, ownProps) {
     onChangeMode: function(mode) {
       dispatch(onModeChange(mode));
     },
-    onUserInput: function(evt) {
-      dispatch(onUserInput(evt.target.value));
+    onUserInput: function(value) {
+      dispatch(onUserInput(value));
     },
     onSubmitWord: function() {
       dispatch(onModalVisibilityChange(true));
+    },
+    onModalClose: function() {
+      dispatch(onModalVisibilityChange(false));
+    },
+    onTermSave: function(term) {
+      console.log('term!', term);
     }
   }
 };

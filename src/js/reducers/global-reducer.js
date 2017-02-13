@@ -2,6 +2,7 @@ import {
 	ON_MODE_CHANGE, 
 	ON_USER_INPUT 
 } from '../actions/global-actions';
+import { removeSpecialChars } from '../utils/validation';
 
 const initialState = {
 	mode: 'save',
@@ -19,11 +20,11 @@ export default function globals(state = initialState, action) {
     	switch(state.mode) {
     		case 'save':
     			return Object.assign({}, state, {
-		        saveTerm: action.value.toLowerCase()
+		        saveTerm: removeSpecialChars(action.value).toLowerCase()
 		      });
     		case 'search':
     			return Object.assign({}, state, {
-		        searchTerm: action.value.toLowerCase()
+		        searchTerm: removeSpecialChars(action.value).toLowerCase()
 		      });
     	}
     default:
