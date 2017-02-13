@@ -98,7 +98,7 @@ export default class Modal extends Component {
 
 Modal.propTypes = {
   onModalClose: PropTypes.func.isRequired,
-  onTermSave: PropTypes.func.isRequired,
+	onItemSave: PropTypes.func.isRequired,
 	isModalVisible: PropTypes.bool.isRequired,
   saveItem: PropTypes.string.isRequired
 };

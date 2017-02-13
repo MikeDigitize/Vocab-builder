@@ -5,7 +5,7 @@ import {
 } from '../actions/global-actions';
 import VocabDatabase from '../utils/database';
 import { onModalVisibilityChange } from '../actions/save-term-actions';
-import { onAppDataLoaded } from '../actions/database-actions';
+import { onAppDataLoaded, onItemSaved } from '../actions/database-actions';
 import Home from './home';
 
 function mapStateToProps(state) {
@@ -26,7 +26,6 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     onAppInitialise() {
       let lastSavedWord = '';
-      //VocabDatabase.removeAll();
       VocabDatabase.iterate(function(data, word) {
         if(data.isLatestWord) {
           lastSavedWord = word;
@@ -50,8 +49,21 @@ function mapDispatchToProps(dispatch, ownProps) {
     onModalClose() {
       dispatch(onModalVisibilityChange(false));
     },
-    onTermSave(term) {
-      console.log('term!', term);
+    onItemSave(item) {
+      let latestWord = Object.keys(item)[0];
+      item[latestWord].isLatestWord = true;
+      VocabDatabase.iterate(function(data, word) {
+        if(data.isLatestWord) {
+          data.isLatestWord = false;
+          VocabDatabase.set(word, data);
+        }
+      })
+      .then(() => VocabDatabase.set(latestWord, item[latestWord]))
+      .then(function() {
+        dispatch(onModalVisibilityChange(false));
+        dispatch(onItemSaved(latestWord));
+        dispatch(onUserInput(''));
+      });
     }
   }
 };

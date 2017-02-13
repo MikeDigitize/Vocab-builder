@@ -32,9 +32,10 @@ export function onListen({ saveItem }) {
 	}
 }
 
-export function onSave({ definition, synonyms }, { saveItem, onTermSave }) {
+export function onSave({ definition, synonyms }, { saveItem, onItemSave }) {
 	let definitionValue = definition.value.trim();
-	let synonymsValue = synonyms.value;
+	let synonymsValue = synonyms.value.trim();
+	saveItem = saveItem.trim();
 	if(testWordLength(definitionValue, 5)) {
 		if(synonymsValue) {
 			synonymsValue = splitSynonymsToArray(synonymsValue);
@@ -49,7 +50,7 @@ export function onSave({ definition, synonyms }, { saveItem, onTermSave }) {
 		};
 		definition.value = '';
 		synonyms.value = '';
-		onTermSave(data);		
+		onItemSave(data);		
 	}
 }
 

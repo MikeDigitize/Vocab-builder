@@ -21,7 +21,7 @@ export default class Home extends Component {
 			onSubmitWord,
 			isModalVisible,
 			onModalClose,
-			onTermSave,
+			onItemSave,
 			isAppDataLoaded,
 			wordCount,
 			lastSavedWord,
@@ -51,7 +51,7 @@ export default class Home extends Component {
 			    	isModalVisible={ isModalVisible }
 			    	onUserInput={ onUserInput }
 			    	saveItem={ saveItem }
-			    	onTermSave={ onTermSave } />
+						onItemSave={ onItemSave } />
 			  </div>
 			);
 		}
@@ -69,7 +69,7 @@ Home.propTypes = {
   onSubmitWord: PropTypes.func.isRequired,
   isModalVisible: PropTypes.bool.isRequired,
   onModalClose: PropTypes.func.isRequired,
-  onTermSave: PropTypes.func.isRequired,
+	onItemSave: PropTypes.func.isRequired,
   isAppDataLoaded: PropTypes.bool.isRequired,
   wordCount: PropTypes.number.isRequired,
   lastSavedWord: PropTypes.string.isRequired,

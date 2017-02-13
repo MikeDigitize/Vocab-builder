@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "SET NODE_ENV=production&&parallelshell \"node index.js\" \"webpack\"",
-    "dev-server": "SET NODE_ENV=development&&webpack-dev-server --inline"
+    "dev": "SET NODE_ENV=development&&webpack-dev-server --inline"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
