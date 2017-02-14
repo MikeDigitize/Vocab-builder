@@ -12,7 +12,7 @@ export default class Home extends Component {
 		this.props.onAppInitialise();
 	}
 	render() {
-		let { 
+		const { 
 			onChangeMode, 
 			mode, 
 			onUserInput, 

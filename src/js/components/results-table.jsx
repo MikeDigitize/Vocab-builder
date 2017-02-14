@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const ResultsTable = ({ searchResults }) => (
+const ResultsTable = ({ searchResults, startIndex }) => (
 	<div>
 		<table className="table">
 		  <thead className="thead-inverse">
@@ -12,9 +12,9 @@ const ResultsTable = ({ searchResults }) => (
 		    </tr>
 		  </thead>
 		  <tbody>
-		  	{ searchResults.slice(0, 3).map((result, i) => (
+		  	{ searchResults.map((result, i) => (
 		  		<tr key={ i }>
-		  			<th scope="row">{ ++i }</th>
+		  			<th scope="row">{ startIndex + i }</th>
 		  			<td>{ result.word }</td>
 		  			<td>{ result.data.definition }</td>
 		  			<td>{ result.data.synonyms.length }</td>
@@ -36,7 +36,8 @@ ResultsTable.propTypes = {
   		definition: PropTypes.string.isRequired,
   		synonyms: PropTypes.arrayOf(PropTypes.string)
   	}).isRequired
-  })).isRequired
+  })).isRequired,
+  startIndex: PropTypes.number.isRequired
 };
 
 export default ResultsTable;
