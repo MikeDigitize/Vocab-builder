@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import styles from '../../scss/results-container';
+import styles from '../../scss/results';
+import ResultsTable from './results-table';
 
 const Results = ({ wordCount, lastSavedWord, mode, searchResults, isSearching }) => (
   <div className={ `${styles.resultsContainer}` }>
@@ -10,17 +11,14 @@ const Results = ({ wordCount, lastSavedWord, mode, searchResults, isSearching })
       </span>
     </h4>
     { mode === 'search' && isSearching &&
-					<div className={ `${styles.results}` }>
-						<hr />
-						<h2>Search Results</h2>
-						{ isSearching && !searchResults.length ?
-							<p>Sorry! No results found.</p> :
-							<ul>
-								{ searchResults.map((result, i) => <li key={i}>{ result.word }<span><br /></span></li>) }
-							</ul>
-						}						
-					</div> 
-				}
+			<div className={ `${styles.results}` }>
+				<h2>Search Results <span className={ `${styles.resultTotal}` }>(total of { searchResults.length })</span></h2>
+				{ isSearching && !searchResults.length ?
+					<p>Sorry! No results found.</p> :
+          <ResultsTable searchResults={ searchResults } />
+				}						
+			</div> 
+		}
   </div>
 );
 

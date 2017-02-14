@@ -9,6 +9,11 @@ export default class TextInput extends Component {
   componentDidMount() {
     this.focus();
   }
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.mode !== this.props.mode) {
+      this.refs.input.focus();
+    }
+  }
   focus() {
     this.refs.input.focus();
   }
