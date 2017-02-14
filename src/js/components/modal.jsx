@@ -55,10 +55,15 @@ export default class Modal extends Component {
 									placeholder={ `Define ${saveItem}...` }>
 								</textarea>
 								<small 
-										id="definitionHelp" 
-										className="form-text text-muted">
-										Add a definition to store alongside your word.
-									</small> 
+									ref="errorMessage" 
+									className="modalError errorHide">
+									Make sure you add a definition before you save!
+								</small>
+								<small 
+									id="definitionHelp" 
+									className="form-text text-muted">
+									Add a definition to store alongside your word.
+								</small> 
 							</div>
 						</div>
 						<div className="col-sm-8 offset-sm-2">

@@ -9,6 +9,9 @@
 			font-style: italic;
 			display: block;
 		}
+		.wordCount {
+			color: darken($bg, 60%);
+		}
 	}
 	.results {
 		text-align: center;
@@ -20,13 +23,30 @@
     		color: darken($bg, 50%);
     		font-size: 12px;
     	}
+    	&.toggleShowHide {
+    		transition: color 0.3s ease-in;
+    		cursor: pointer;
+    		&:hover {
+    			color: #000;
+    		}
+    	}
 		}
 		:global(.table) {
 			box-shadow: $box-shadow;
+			margin-top: 12px;
 			tr {
 				background: #fff;
 				border-bottom: 1px solid darken($bg, 35%);
 				text-align: left;
+				:global(.edit) {
+					color: $btn-color;
+					transition: color 0.3s ease-in;
+					cursor: pointer;
+					font-size: 14px;
+					&:hover {
+						color: lighten($btn-color, 15%);
+					}
+				}
 			}
 		}
 	}

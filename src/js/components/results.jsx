@@ -14,12 +14,13 @@ export default class Results extends Component {
   }
   render() {
     const { wordCount, lastSavedWord, mode, searchResults, isSearching } = this.props;
+    const { showAllResults } = this.state;
     const resultCount = searchResults.length;
-    const hiddenResults = searchResults.slice(3, resultCount);
-    const results = searchResults.slice(0, 3);
+    const hiddenCount = resultCount - 3;
+    const results = showAllResults ? searchResults : searchResults.slice(0, 3);
     return (
       <div className={ `${styles.resultsContainer}` }>
-        <h4>Words in vocab: { wordCount } 
+        <h4>Words in vocab: <span className={ `${styles.wordCount}` }>{ wordCount }</span> 
           <span 
             className={ `${styles.lastSavedWord}` }>
             { lastSavedWord ? `Your latest word: ${lastSavedWord}` : '' }
@@ -35,13 +36,11 @@ export default class Results extends Component {
                 { 
                   searchResults.length > 3 && 
                   <div>
-                    <h2 onClick={ this.toggleShowAllResults.bind(this) }>
+                    <h2 className={ `${styles.toggleShowHide}` } onClick={ this.toggleShowAllResults.bind(this) }>
                       { 
-                        !this.state.showAllResults ? `${hiddenResults.length} result(s) hidden, click to show` : 'Click to hide' }
-                    </h2>
-                    {
-                      this.state.showAllResults && <ResultsTable searchResults={ hiddenResults } startIndex={ 4 } />
-                    }
+                        !showAllResults ? `${hiddenCount} result(s) hidden, click to show more` : 'show less'
+                      }
+                    </h2>                    
                   </div>
                 }
               </div>
@@ -52,6 +51,13 @@ export default class Results extends Component {
     );
   }
 }
+
+/*
+  {
+                      this.state.showAllResults && <ResultsTable searchResults={ hiddenResults } startIndex={ 4 } />
+                    }
+
+*/
 
 Results.propTypes = {
   wordCount: PropTypes.number.isRequired,
