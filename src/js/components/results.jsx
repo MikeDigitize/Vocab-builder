@@ -3,21 +3,30 @@ import styles from '../../scss/results';
 import ResultsTable from './results-table';
 
 export default class Results extends Component {
+
   constructor(props) {
+
     super(props);
     this.state = { showAllResults: false };
+
   }
+
   toggleShowAllResults() {
+
     this.setState({
       showAllResults: !this.state.showAllResults
     });
+
   }
+
   render() {
+
     const { wordCount, lastSavedWord, mode, searchResults, isSearching } = this.props;
     const { showAllResults } = this.state;
     const resultCount = searchResults.length;
     const hiddenCount = resultCount - 3;
     const results = showAllResults ? searchResults : searchResults.slice(0, 3);
+
     return (
       <div className={ `${styles.resultsContainer}` }>
         <h4>Words in vocab: <span className={ `${styles.wordCount}` }>{ wordCount }</span> 
@@ -29,7 +38,7 @@ export default class Results extends Component {
         { mode === 'search' && isSearching &&
           <div className={ `${styles.results}` }>
             { isSearching && !resultCount ?
-              <p>Sorry! No results found.</p> :
+              <h2 className={ `${styles.noResults}` }>Sorry! No results found.</h2> :
               <div>
                 <h2>Search Results <span className={ `${styles.resultTotal}` }>(total of { resultCount })</span></h2>
                 <ResultsTable searchResults={ results } startIndex={ 1 } />
@@ -49,15 +58,10 @@ export default class Results extends Component {
         }
       </div>
     );
+    
   }
+
 }
-
-/*
-  {
-                      this.state.showAllResults && <ResultsTable searchResults={ hiddenResults } startIndex={ 4 } />
-                    }
-
-*/
 
 Results.propTypes = {
   wordCount: PropTypes.number.isRequired,

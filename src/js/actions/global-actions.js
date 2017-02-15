@@ -10,13 +10,8 @@ export function onUserInput(value) {
 	return { type : ON_USER_INPUT, value };
 }
 
-export function globalDispatchers(dispatch) {
-	return {
-		onChangeMode(mode) {
-      dispatch(onModeChange(mode));
-    },
-    onUserInput(value) {
-      dispatch(onUserInput(value));
-    }
-	}
+export const ON_MODAL_VISIBILITY_CHANGE = 'ON_MODAL_VISIBILITY_CHANGE';
+
+export function onModalVisibilityChange(isVisible) {
+  return { type: ON_MODAL_VISIBILITY_CHANGE, isVisible };
 }

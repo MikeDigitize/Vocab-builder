@@ -3,38 +3,53 @@ import { testWordLength } from '../utils/validation';
 import styles from '../../scss/text-input';
 
 export default class TextInput extends Component {
+
   constructor(props) {
     super(props);
   }
+
   componentDidMount() {
     this.focus();
   }
+
   componentDidUpdate(prevProps, prevState) {
+
     if(prevProps.mode !== this.props.mode) {
       this.refs.input.focus();
     }
+
   }
+
   focus() {
     this.refs.input.focus();
   }
+
   onChange(evt) {
-    let { mode, onUserInput, onSearch } = this.props;
-    let { value } = evt.target;
+
+    const { mode, onUserInput, onSearch } = this.props;
+    const { value } = evt.target;
     onUserInput(value);
     if(mode === 'search') {
       onSearch(value);
     }
+
   }
+
   onSubmit() {
-    let { value } = this.refs.input;
+
+    const { value } = this.refs.input;
+    const { onSubmitItem } = this.props;
     if(testWordLength(value, 2)) {
-      this.props.onSubmitItem();
+      onSubmitItem();
     }
     else {
       this.focus();
-    }    
+    }  
+
   }
+
   render() {
+
     const { mode, saveItem, searchItem } = this.props;
     return (
       <div>
@@ -60,7 +75,9 @@ export default class TextInput extends Component {
         <h2 className={`${styles.modeText}`}>{ mode } Mode</h2>
       </div>
     );
+    
   }
+  
 }
 
 TextInput.propTypes = {

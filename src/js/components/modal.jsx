@@ -1,30 +1,139 @@
 import React, { PropTypes, Component } from 'react';
-import { onEditWord, onListen, onSave, toggleModal, onModalClose } from '../utils/modal';
+import { testWordLength, removeSpecialChars } from '../utils/validation';
+import { onListen } from '../utils/speech';
 import styles from '../../scss/modal';
 
-let preventSpeech = false;
-
 export default class Modal extends Component {
+
 	constructor(props) {
 		super(props);
 	}
+
 	componentDidUpdate() {
-		toggleModal(this.refs, this.props);
+		this.toggleModal();
 	}
+
+	toggleModal() {
+
+		const { modal, overlay, definition, errorMessage } = this.refs;
+		const { isModalVisible } = this.props;
+
+		function onTransitionEnd() {
+			overlay.style.display = 'none';
+			overlay.removeEventListener('transitionend', onTransitionEnd);
+		}
+
+		definition.classList.remove('modalError');
+		errorMessage.classList.add('errorHide');
+
+		if(isModalVisible) {
+			overlay.style.display = 'block';
+			overlay.classList.add('active');
+			modal.classList.add('active');
+		}
+		else {
+			overlay.addEventListener('transitionend', onTransitionEnd);
+			overlay.classList.remove('active');
+			modal.classList.remove('active');
+		}
+		
+	}
+
 	onEditWord() {
-		onEditWord(this.refs, this.props);		
+
+		const { edit, currentWord } = this.refs;
+		const { onUserInput, saveItem } = this.props;
+		const text = removeSpecialChars(currentWord.textContent);
+
+		if(edit.getAttribute('data-state') === 'edit') {
+			edit.setAttribute('data-state', 'save');
+			edit.textContent = 'save changes';
+			currentWord.contentEditable = 'true';
+			currentWord.focus();
+		}
+		else {
+			edit.setAttribute('data-state', 'edit');
+			edit.textContent = 'edit';
+			currentWord.contentEditable = 'false';
+			if(testWordLength(text, 2) && text !== saveItem) {
+				onUserInput(text);
+			}
+			else {
+				currentWord.textContent = saveItem;
+			}
+
+		}	
 	}
+
 	onListen() {
-		onListen(this.props);		
+
+		const { saveItem } = this.props;
+		onListen(saveItem);		
+
 	}
+
 	onModalClose() {
-		onModalClose(this.refs, this.props, this.onEditWord.bind(this));
+
+		const { edit } = this.refs;
+		const { onModalClose, saveItem } = this.props;
+
+		if(edit.getAttribute('data-state') === 'save') {
+			edit.textContent = saveItem;
+			this.onEditWord();
+		}
+		onModalClose();		
+
 	}
+
 	onSave() {
-		onSave(this.refs, this.props);
+
+		const { definition, synonyms, errorMessage } = this.refs;
+		const { saveItem, onItemSave } = this.props;
+
+		let definitionValue = definition.value.trim();
+		let synonymsValue = synonyms.value.trim();
+		let saveItemValue = saveItem.trim();
+
+		if(!definitionValue.length) {
+			definition.classList.add('modalError');
+			errorMessage.classList.remove('errorHide');
+			return;
+		}
+
+		definition.classList.remove('modalError');
+		errorMessage.classList.add('errorHide');
+
+		definition.value = '';
+		synonyms.value = '';
+
+		if(definitionValue[definitionValue.length - 1] !== '.') {
+			definitionValue += '.';
+		}
+
+		if(synonymsValue) {
+			synonymsValue = synonymsValue.split(',').map(synonym => removeSpecialChars(synonym.trim()));
+		}
+		else {
+			synonymsValue = [];
+		}
+
+		if(testWordLength(definitionValue, 5)) {
+			
+			let data = {};
+			data[saveItemValue] = {
+				definition: definitionValue,
+				synonyms: synonymsValue
+			};
+			
+			onItemSave(data);	
+
+		}
+
 	}
+
 	render() {
-		let { onModalClose, saveItem } = this.props;
+
+		const { onModalClose, saveItem } = this.props;
 		return (
 		  <div className={ `${styles.modalHolder}` }>
 				<div className="vocabModal" ref="modal">	 	
@@ -98,12 +207,16 @@ export default class Modal extends Component {
 				</div>	 
 			</div>
 		);
+
 	}
+	
 }
 
 Modal.propTypes = {
   onModalClose: PropTypes.func.isRequired,
 	onItemSave: PropTypes.func.isRequired,
 	isModalVisible: PropTypes.bool.isRequired,
-  saveItem: PropTypes.string.isRequired
+  saveItem: PropTypes.string.isRequired,
+  onUserInput: PropTypes.func.isRequired,
+  onItemSave: PropTypes.func.isRequired
 };

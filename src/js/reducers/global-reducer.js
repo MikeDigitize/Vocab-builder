@@ -1,13 +1,15 @@
 import { 
 	ON_MODE_CHANGE, 
-	ON_USER_INPUT 
+	ON_USER_INPUT,
+  ON_MODAL_VISIBILITY_CHANGE 
 } from '../actions/global-actions';
 import { removeSpecialChars } from '../utils/validation';
 
 let initialState = {
 	mode: 'save',
 	saveItem: '',
-	searchItem: ''
+	searchItem: '',
+  isModalVisible: false
 };
 
 export default function globals(state = initialState, action) {
@@ -27,6 +29,10 @@ export default function globals(state = initialState, action) {
 		        searchItem: removeSpecialChars(action.value).toLowerCase()
 		      });
     	}
+      case ON_MODAL_VISIBILITY_CHANGE:
+        return Object.assign({}, state, {
+          isModalVisible: action.isVisible
+        });
     default:
       return state
   }
