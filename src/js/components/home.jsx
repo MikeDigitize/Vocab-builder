@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ModeControl from './mode-control';
+import ModeControlContainer from './mode-control-container';
 import ResultsContainer from './results-container';
 import ModalContainer from './modal-container';
 import TextInputContainer from './text-input-container';
@@ -16,11 +16,11 @@ export default class Home extends Component {
 
 	render() {
 
-		const { isAppDataLoaded, onChangeMode } = this.props;
+		const { isAppDataLoaded } = this.props;
 		if(isAppDataLoaded) {
 			return (
 				<div className="col-xl-6 offset-xl-3">
-			    <ModeControl onChangeMode={ onChangeMode } />
+			    <ModeControlContainer />
 			    <TextInputContainer />
 			    <ResultsContainer />		
 			    <ModalContainer />
@@ -33,9 +33,7 @@ export default class Home extends Component {
 
 }
 
-
 Home.propTypes = {
-  onChangeMode: PropTypes.func.isRequired,
   onAppInitialise: PropTypes.func.isRequired,
   isAppDataLoaded: PropTypes.bool.isRequired
 };

@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import VocabDatabase from '../utils/database';
-import { onModeChange } from '../actions/global-actions';
 import { onAppDataLoaded } from '../actions/database-actions';
 import Home from './home';
 
@@ -24,9 +23,6 @@ function mapDispatchToProps(dispatch) {
         const wordCount = keys.length;  
         dispatch(onAppDataLoaded({ wordCount, lastSavedWord }));          
       });
-    },
-    onChangeMode(mode) {
-      dispatch(onModeChange(mode));
     }
   };
 };
