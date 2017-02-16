@@ -21,7 +21,7 @@ export default class Results extends Component {
 
   render() {
 
-    const { wordCount, lastSavedWord, mode, searchResults, isSearching } = this.props;
+    const { wordCount, lastSavedWord, mode, searchResults, isSearching, onEditToggle } = this.props;
     const { showAllResults } = this.state;
     const resultCount = searchResults.length;
     const hiddenCount = resultCount - 3;
@@ -41,7 +41,11 @@ export default class Results extends Component {
               <h2 className={ `${styles.noResults}` }>Sorry! No results found.</h2> :
               <div>
                 <h2>Search Results <span className={ `${styles.resultTotal}` }>(total of { resultCount })</span></h2>
-                <ResultsTable searchResults={ results } startIndex={ 1 } />
+                <ResultsTable 
+                  searchResults={ results } 
+                  onEditToggle={ onEditToggle } 
+                  startIndex={ 1 } 
+                />
                 { 
                   searchResults.length > 3 && 
                   <div>
@@ -68,5 +72,6 @@ Results.propTypes = {
   mode: PropTypes.string.isRequired,
 	searchResults: PropTypes.array.isRequired,
   lastSavedWord: PropTypes.string.isRequired,
-  isSearching: PropTypes.bool.isRequired
+  isSearching: PropTypes.bool.isRequired,
+  onEditToggle: PropTypes.func.isRequired
 };

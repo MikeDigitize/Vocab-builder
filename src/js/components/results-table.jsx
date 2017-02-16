@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const ResultsTable = ({ searchResults, startIndex }) => (
+const ResultsTable = ({ searchResults, startIndex, onEditToggle }) => (
 	<div>
 		<table className="table">
 		  <thead className="thead-inverse">
@@ -15,7 +15,14 @@ const ResultsTable = ({ searchResults, startIndex }) => (
 		  	{ searchResults.map((result, i) => (
 		  		<tr key={ i }>
 		  			<th scope="row">{ startIndex + i }</th>
-		  			<td>{ result.word }<p className="edit">edit</p></td>
+		  			<td>
+		  				{ result.word }
+		  				<p 
+		  					className="edit" 
+		  					onClick={ () => onEditToggle({ result, isEditMode: true }) }>
+		  					edit
+		  				</p>
+		  			</td>
 		  			<td>{ result.data.definition }</td>
 		  			<td>{ result.data.synonyms.length }</td>
 		  		</tr>)
@@ -33,7 +40,8 @@ ResultsTable.propTypes = {
   		synonyms: PropTypes.arrayOf(PropTypes.string)
   	}).isRequired
   })).isRequired,
-  startIndex: PropTypes.number.isRequired
+  startIndex: PropTypes.number.isRequired,
+  onEditToggle: PropTypes.func.isRequired
 };
 
 export default ResultsTable;

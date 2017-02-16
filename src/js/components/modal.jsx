@@ -10,12 +10,27 @@ export default class Modal extends Component {
 	}
 
 	componentDidUpdate() {
+
+		const { isModalVisible } = this.props;
+		const { definitionInput, modal } = this.refs;
+
 		this.toggleModal();
+
+		if(isModalVisible) {
+			definitionInput.focus();
+			modal.parentNode.setAttribute('aria-hidden', false);
+			document.body.firstElementChild.setAttribute('aria-hidden', true);
+		}
+		else {
+			modal.parentNode.setAttribute('aria-hidden', true);
+			document.body.firstElementChild.setAttribute('aria-hidden', false);
+		}
+
 	}
 
 	toggleModal() {
 
-		const { modal, overlay, definition, errorMessage } = this.refs;
+		const { modal, overlay, definitionInput, errorMessage } = this.refs;
 		const { isModalVisible } = this.props;
 
 		function onTransitionEnd() {
@@ -23,7 +38,7 @@ export default class Modal extends Component {
 			overlay.removeEventListener('transitionend', onTransitionEnd);
 		}
 
-		definition.classList.remove('modalError');
+		definitionInput.classList.remove('modalError');
 		errorMessage.classList.add('errorHide');
 
 		if(isModalVisible) {
@@ -75,57 +90,85 @@ export default class Modal extends Component {
 	onModalClose() {
 
 		const { edit } = this.refs;
-		const { onModalClose, saveItem } = this.props;
+		const { onModalClose, saveItem, onEditToggle, isEditMode } = this.props;
 
 		if(edit.getAttribute('data-state') === 'save') {
 			edit.textContent = saveItem;
 			this.onEditWord();
 		}
-		onModalClose();		
+
+		if(isEditMode) {
+			onEditToggle({ isEditMode: false });
+		}
+		else {
+			onModalClose();		
+		}		
+
+	}
+
+	onSaveItemData() {
+
+		const { definitionInput, synonymsInput, errorMessage } = this.refs;
+		const { onSaveItemData } = this.props;
+		const definition = definitionInput.value;
+		const synonyms = synonymsInput.value;
+		
+		definitionInput.classList.remove('modalError');
+		errorMessage.classList.add('errorHide');
+		onSaveItemData({ definition, synonyms	});
+
+	}
+
+	onDelete() {
+
+		const { onDelete, saveItem, onEditToggle } = this.props;
+		const proceed = confirm(`Are you sure you want to delete ${saveItem}?`);
+		if(proceed) {
+			onDelete({ saveItem, onEditToggle });
+		}		
 
 	}
 
 	onSave() {
 
-		const { definition, synonyms, errorMessage } = this.refs;
-		const { saveItem, onItemSave } = this.props;
+		const { definitionInput, synonymsInput, errorMessage } = this.refs;
+		const { saveItem, onItemSave, saveItemData, isEditMode } = this.props;
+		let { definition, synonyms } = saveItemData;
 
-		let definitionValue = definition.value.trim();
-		let synonymsValue = synonyms.value.trim();
-		let saveItemValue = saveItem.trim();
-
-		if(!definitionValue.length) {
-			definition.classList.add('modalError');
+		if(!definition.length) {
+			definitionInput.classList.add('modalError');
 			errorMessage.classList.remove('errorHide');
 			return;
 		}
 
-		definition.classList.remove('modalError');
+		definitionInput.classList.remove('modalError');
 		errorMessage.classList.add('errorHide');
 
-		definition.value = '';
-		synonyms.value = '';
+		definitionInput.value = '';
+		synonymsInput.value = '';
 
-		if(definitionValue[definitionValue.length - 1] !== '.') {
-			definitionValue += '.';
+		if(definition[definition.length - 1] !== '.') {
+			definition += '.';
 		}
 
-		if(synonymsValue) {
-			synonymsValue = synonymsValue.split(',').map(synonym => removeSpecialChars(synonym.trim()));
+		if(synonyms.length) {
+			synonyms = synonyms
+											.split(',')
+											.map(synonym => removeSpecialChars(synonym.trim()));
 		}
 		else {
-			synonymsValue = [];
+			synonyms = [];
 		}
 
-		if(testWordLength(definitionValue, 5)) {
+		if(testWordLength(definition, 5)) {
 			
-			let data = {};
-			data[saveItemValue] = {
-				definition: definitionValue,
-				synonyms: synonymsValue
+			let item = {};
+			item[saveItem] = {
+				definition,
+				synonyms
 			};
 			
-			onItemSave(data);	
+			onItemSave({ item, isEditMode });	
 
 		}
 
@@ -133,9 +176,9 @@ export default class Modal extends Component {
 
 	render() {
 
-		const { onModalClose, saveItem } = this.props;
+		const { onModalClose, saveItem, isEditMode, saveItemData } = this.props;
 		return (
-		  <div className={ `${styles.modalHolder}` }>
+		  <div className={ `${styles.modalHolder}` } aria-hidden="true">
 				<div className="vocabModal" ref="modal">	 	
 					<div className="modal-close" onClick={ this.onModalClose.bind(this) }></div>	
 					<div className="row">
@@ -158,8 +201,10 @@ export default class Modal extends Component {
 								<textarea 
 									className="form-control" 
 									id="definition" 
-									ref="definition" 
+									ref="definitionInput" 
 									rows="3"
+									value={ saveItemData.definition }
+									onChange={ this.onSaveItemData.bind(this) }
 									aria-describedby="definitionHelp" 
 									placeholder={ `Define ${saveItem}...` }>
 								</textarea>
@@ -182,8 +227,10 @@ export default class Modal extends Component {
 										type="text" 
 										className="form-control" 
 										id="synonyms"
-										ref="synonyms" 
-    								aria-describedby="synonymHelp" 
+										ref="synonymsInput"
+										value={ saveItemData.synonyms } 
+										onChange={ this.onSaveItemData.bind(this) }
+    								aria-describedby="synonymHelp"
     								placeholder={ `Synonyms for ${saveItem}...` }/>
 									<small 
 										id="synonymHelp" 
@@ -197,6 +244,14 @@ export default class Modal extends Component {
 								onClick={ this.onSave.bind(this) }>
 								Save { saveItem }
 							</button>
+							{ isEditMode && 
+								<button 
+									type="submit" 
+									className="btn btn-danger"
+									onClick={ this.onDelete.bind(this) }>
+									Delete { saveItem }
+								</button>
+							}
 						</div>
 					</div>
 				</div>	
@@ -218,5 +273,13 @@ Modal.propTypes = {
 	isModalVisible: PropTypes.bool.isRequired,
   saveItem: PropTypes.string.isRequired,
   onUserInput: PropTypes.func.isRequired,
-  onItemSave: PropTypes.func.isRequired
+  onItemSave: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
+  onSaveItemData: PropTypes.func.isRequired,
+  saveItemData: PropTypes.shape({
+  	definition: PropTypes.string.isRequired,
+  	synonyms: PropTypes.string.isRequired
+  }).isRequired,
+  onEditToggle: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 };

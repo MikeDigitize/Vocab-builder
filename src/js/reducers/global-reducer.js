@@ -1,15 +1,21 @@
 import { 
 	ON_MODE_CHANGE, 
 	ON_USER_INPUT,
-  ON_MODAL_VISIBILITY_CHANGE 
-} from '../actions/global-actions';
+  ON_MODAL_VISIBILITY_CHANGE,
+  ON_EDIT_TOGGLE,
+  ON_SAVE_ITEM_DATA } from '../actions/global-actions';
 import { removeSpecialChars } from '../utils/validation';
 
 let initialState = {
 	mode: 'save',
 	saveItem: '',
 	searchItem: '',
-  isModalVisible: false
+  isModalVisible: false,
+  isEditMode: false,
+  saveItemData: {
+    definition: '',
+    synonyms: ''
+  }
 };
 
 export default function globals(state = initialState, action) {
@@ -32,6 +38,17 @@ export default function globals(state = initialState, action) {
       case ON_MODAL_VISIBILITY_CHANGE:
         return Object.assign({}, state, {
           isModalVisible: action.isVisible
+        });
+      case ON_EDIT_TOGGLE:
+        return Object.assign({}, state, {
+          isEditMode: action.isEditMode
+        });
+      case ON_SAVE_ITEM_DATA:
+        return Object.assign({}, state, {
+          saveItemData: {
+            definition: removeSpecialChars(action.data.definition),
+            synonyms: removeSpecialChars(action.data.synonyms)
+          }
         });
     default:
       return state

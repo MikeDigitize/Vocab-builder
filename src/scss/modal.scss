@@ -120,6 +120,11 @@
 	    }
     }
 
+    :global(.btn-danger) {
+    	cursor: pointer;
+    	margin-left: 20px;
+    }
+
     &:global(.active) {
     	top: 10%;
 

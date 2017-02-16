@@ -3,5 +3,5 @@ export function testWordLength(word, expectedLength) {
 }
 
 export function removeSpecialChars(word) {
-	return word.replace(/[`~!@#$£%^&*()|+=?;:'",.<>\{\}\[\]\\\/\d]/gi, '');
+	return word.replace(/[`~!@#$£%^&*()|+=?;:'"<>\{\}\[\]\\\/\d]/gi, '');
 }

@@ -15,3 +15,15 @@ export const ON_MODAL_VISIBILITY_CHANGE = 'ON_MODAL_VISIBILITY_CHANGE';
 export function onModalVisibilityChange(isVisible) {
   return { type: ON_MODAL_VISIBILITY_CHANGE, isVisible };
 }
+
+export const ON_EDIT_TOGGLE = 'ON_EDIT_TOGGLE';
+
+export function onEditToggle(isEditMode) {
+  return { type: ON_EDIT_TOGGLE, isEditMode };
+}
+
+export const ON_SAVE_ITEM_DATA = 'ON_SAVE_ITEM_DATA';
+
+export function onSaveItemData(data) {
+  return { type: ON_SAVE_ITEM_DATA, data };
+}

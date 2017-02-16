@@ -9,26 +9,37 @@ export default class TextInput extends Component {
   }
 
   componentDidMount() {
-    this.focus();
+
+    const { input } = this.refs;
+    input.focus();
+
   }
 
   componentDidUpdate(prevProps, prevState) {
 
-    if(prevProps.mode !== this.props.mode) {
-      this.refs.input.focus();
+    const { mode } = this.props;
+    const { input } = this.refs;
+
+    if(prevProps.mode !== mode) {
+      input.focus();
     }
 
   }
 
   focus() {
-    this.refs.input.focus();
+
+    const { input } = this.refs;
+    input.focus();
+
   }
 
   onChange(evt) {
 
     const { mode, onUserInput, onSearch } = this.props;
     const { value } = evt.target;
+
     onUserInput(value);
+
     if(mode === 'search') {
       onSearch(value);
     }
@@ -39,6 +50,7 @@ export default class TextInput extends Component {
 
     const { value } = this.refs.input;
     const { onSubmitItem } = this.props;
+    
     if(testWordLength(value, 2)) {
       onSubmitItem();
     }
