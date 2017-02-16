@@ -9,15 +9,23 @@ export default class Modal extends Component {
 		super(props);
 	}
 
+	componentWillReceiveProps(nextProps) {
+		
+		const { definitionInput } = this.refs;
+		if(!this.props.isModalVisible && nextProps.isModalVisible) {
+			window.requestAnimationFrame(() => definitionInput.focus());			
+		}
+		
+	}
+
 	componentDidUpdate() {
 
 		const { isModalVisible } = this.props;
-		const { definitionInput, modal } = this.refs;
+		const { modal } = this.refs;
 
 		this.toggleModal();
 
 		if(isModalVisible) {
-			definitionInput.focus();
 			modal.parentNode.setAttribute('aria-hidden', false);
 			document.body.firstElementChild.setAttribute('aria-hidden', true);
 		}

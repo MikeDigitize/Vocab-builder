@@ -16,7 +16,7 @@ const ResultsTable = ({ searchResults, startIndex, onEditToggle }) => (
 		  		<tr key={ i }>
 		  			<th scope="row">{ startIndex + i }</th>
 		  			<td>
-		  				{ result.word }
+		  				<span className="word">{ result.word }</span>
 		  				<p 
 		  					className="edit" 
 		  					onClick={ () => onEditToggle({ result, isEditMode: true }) }>
@@ -24,7 +24,12 @@ const ResultsTable = ({ searchResults, startIndex, onEditToggle }) => (
 		  				</p>
 		  			</td>
 		  			<td>{ result.data.definition }</td>
-		  			<td>{ result.data.synonyms.length }</td>
+		  			<td>{ 
+		  						result.data.synonyms
+		  													.slice(0, 3)
+		  													.map((synonym, i) => <small key={i}>{ synonym }</small>) 
+		  					}
+		  			</td>
 		  		</tr>)
 		  	) }
 		  </tbody>

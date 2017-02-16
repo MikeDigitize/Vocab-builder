@@ -38,6 +38,9 @@
 				background: #fff;
 				border-bottom: 1px solid darken($bg, 35%);
 				text-align: left;
+				:global(.word) {
+					font-weight: bold;
+				}
 				:global(.edit) {
 					color: $btn-color;
 					transition: color 0.3s ease-in;
@@ -46,6 +49,10 @@
 					&:hover {
 						color: lighten($btn-color, 15%);
 					}
+				}
+				small {
+					display: block;
+					color: darken($bg, 75%);
 				}
 			}
 		}

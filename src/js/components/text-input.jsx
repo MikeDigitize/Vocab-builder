@@ -18,10 +18,8 @@ export default class TextInput extends Component {
   componentDidUpdate(prevProps, prevState) {
 
     const { mode } = this.props;
-    const { input } = this.refs;
-
     if(prevProps.mode !== mode) {
-      input.focus();
+      this.focus();
     }
 
   }
