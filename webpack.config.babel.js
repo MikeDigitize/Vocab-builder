@@ -42,11 +42,12 @@ module.exports = {
     devServer: {
         contentBase: join(__dirname, 'build'),
         compress: true,
-        inline : true,
         port: 9000
     },
     entry: {
-        app: 'js/app.jsx'
+        app: 'js/app.jsx',
+        sw: 'js/utils/sw.js',
+        'service-worker': 'js/utils/service-worker.js'
     },
     resolve: {
         modules: [
@@ -76,7 +77,7 @@ module.exports = {
             test: /\.scss$/,
             use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
-                loader: 'css-loader?modules!sass-loader'
+                use: 'css-loader?modules!sass-loader'
             })
         }, {
             test: /\.jpg$/,
