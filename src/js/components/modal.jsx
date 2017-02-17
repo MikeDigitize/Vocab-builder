@@ -140,7 +140,7 @@ export default class Modal extends Component {
 	onSave() {
 
 		const { definitionInput, synonymsInput, errorMessage } = this.refs;
-		const { saveItem, onItemSave, saveItemData, isEditMode } = this.props;
+		const { saveItem, onItemSave, saveItemData, isEditMode, searchItem } = this.props;
 		let { definition, synonyms } = saveItemData;
 
 		if(!definition.length) {
@@ -176,7 +176,7 @@ export default class Modal extends Component {
 				synonyms
 			};
 			
-			onItemSave({ item, isEditMode });	
+			onItemSave({ item, isEditMode, searchItem });	
 
 		}
 
@@ -250,14 +250,14 @@ export default class Modal extends Component {
 								type="submit" 
 								className="btn btn-primary"
 								onClick={ this.onSave.bind(this) }>
-								Save { saveItem }
+								Save { saveItem.length > 13 ? `${saveItem.substr(0, 10)}...` : saveItem }
 							</button>
 							{ isEditMode && 
 								<button 
 									type="submit" 
 									className="btn btn-danger"
 									onClick={ this.onDelete.bind(this) }>
-									Delete { saveItem }
+									Delete { saveItem.length > 13 ? `${saveItem.substr(0, 10)}...` : saveItem }
 								</button>
 							}
 						</div>
@@ -289,5 +289,6 @@ Modal.propTypes = {
   	synonyms: PropTypes.string.isRequired
   }).isRequired,
   onEditToggle: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired,
+  searchItem: PropTypes.string.isRequired
 };

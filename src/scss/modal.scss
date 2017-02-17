@@ -122,7 +122,7 @@
 
     :global(.btn-danger) {
     	cursor: pointer;
-    	margin-left: 20px;
+    	float: right;
     }
 
     &:global(.active) {

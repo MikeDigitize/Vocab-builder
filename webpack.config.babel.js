@@ -45,8 +45,8 @@ module.exports = {
         port: 9000
     },
     entry: {
-        app: 'js/app.jsx',
-        sw: 'js/utils/sw.js',
+        'js/app': 'js/app.jsx',
+        'js/sw': 'js/utils/sw.js',
         'service-worker': 'js/utils/service-worker.js'
     },
     resolve: {
@@ -58,7 +58,7 @@ module.exports = {
     },
     output: {
         path: resolve(`${__dirname}/build`),
-        filename: 'js/[name].js'
+        filename: '[name].js'
     },
     module: {
         rules: [{

@@ -21,7 +21,6 @@ export default function database(state = initialState, action) {
         isAppDataLoaded: true
       });
     case ON_ITEM_SAVED:
-    console.log(action.data);
       return Object.assign({}, state, {
         wordCount: action.data.wordCount,
         lastSavedWord: action.data.lastSavedWord
@@ -32,7 +31,6 @@ export default function database(state = initialState, action) {
         isSearching: action.data.isSearching
       });
     case ON_DELETE:
-      console.log(action.data);
       return Object.assign({}, state, {
         wordCount: action.data.wordCount,
         searchResults: [],
