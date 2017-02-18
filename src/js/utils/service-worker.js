@@ -1,13 +1,3 @@
-/* Service Worker -
-
-	 Combines multiple technologies inc. Web App Manifests, Cache Storage API, IndexedDB, and Push Notifications.
-
-	 `self` is the global scope of the service worker.
-
-	 It includes some additional globals provided by service worker.
-	 e.g. caches
-*/
-
 const CACHE_NAME = 'vocab';
 const urlsToCache = [
 	'/',
@@ -16,11 +6,6 @@ const urlsToCache = [
   '/bundle.css',
   '/js/app.js'
 ];
-
-/* The 'install' event is the first thing a service worker attempts.
-	 You can postpone the install event from firing by using its `waitUntil` method.
-	 Use it to save assets to the service worker cache.
-*/
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -31,22 +16,33 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', function(event) {
-  console.log('Service worker now active!');  
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(cacheNames.map(function(cacheName) {
+        if(cacheName !== CACHE_NAME) {
+          return caches.delete(cacheName);
+        }
+      }));
+    })
+  ); 
 });
-
-/* Intercept requests when offline
-	 and load cached files locally
-*/
 
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
-        if (response) {
+        if(response) {
           return response;
         }
         return fetch(event.request);
       }
     )
   );
+});
+
+self.addEventListener('push', function(event) {  
+  const title = 'Important message from the server!';  
+  const body = 'I see you baby. Shaking dat ass.';  
+  const tag = 'server-notification';
+  event.waitUntil(self.registration.showNotification(title, { body, tag }));  
 });
