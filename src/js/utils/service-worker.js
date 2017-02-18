@@ -44,5 +44,6 @@ self.addEventListener('push', function(event) {
   const title = 'Important message from the server!';  
   const body = 'I see you baby. Shaking dat ass.';  
   const tag = 'server-notification';
-  event.waitUntil(self.registration.showNotification(title, { body, tag }));  
+  const icon = '/images/gift-gab.png';  
+  event.waitUntil(self.registration.showNotification(title, { body, tag, icon }));  
 });

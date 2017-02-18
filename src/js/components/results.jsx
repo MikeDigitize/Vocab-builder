@@ -29,7 +29,7 @@ export default class Results extends Component {
 
     return (
       <div className={ `${styles.resultsContainer}` }>
-        <h4>Words in vocab: <span className={ `${styles.wordCount}` }>{ wordCount }</span> 
+        <h4>Words in your gab: <span className={ `${styles.wordCount}` }>{ wordCount }</span> 
           <span 
             className={ `${styles.lastSavedWord}` }>
             { lastSavedWord ? `Your latest word: ${lastSavedWord}` : '' }

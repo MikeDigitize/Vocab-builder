@@ -5,14 +5,14 @@ const ModeControl = ({ onChangeMode }) => (
   <div className={`${styles.modeControlHolder}`}>       
     <span 
       data-mode="save" 
-      className={`${styles.modeBtn} ${styles.save}`}
+      className={`${styles.modeBtn}`}
       onClick={ () => onChangeMode('save') }>
       Save
     </span>
-    <h1 className="title">Vocab</h1>
+    <h1 className="title">Gift Gab</h1>
     <span 
       data-mode="search" 
-      className={`${styles.modeBtn} ${styles.search}`}
+      className={`${styles.modeBtn}`}
       onClick={ () => onChangeMode('search') }>
       Search
     </span> 

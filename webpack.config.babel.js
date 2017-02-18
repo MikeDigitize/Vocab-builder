@@ -13,8 +13,12 @@ let webpackPlugins = [
     new ExtractTextPlugin('bundle.css'),
     new CopyWebpackPlugin([{
         context: './src/images',
-        from: '**/*.jpg',
+        from: '**/*.png',
         to: './images'
+    }, {
+        context: './src',
+        from: '**/*.json',
+        to: './'
     }, {
         context: './src',
         from: '**/*.css',
@@ -80,7 +84,7 @@ module.exports = {
                 use: 'css-loader?modules!sass-loader'
             })
         }, {
-            test: /\.jpg$/,
+            test: /\.jpg$|.json$/,
             use: ['file-loader']
         }, {
             test: /\.png$/,

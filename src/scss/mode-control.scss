@@ -3,6 +3,10 @@
 	margin: auto;
 	box-sizing: border-box;
 	user-select: none;
+
+	@media(min-width: 450px) {
+		width: 395px;
+	}
 }
 .modeBtn {
 	box-sizing: border-box;
@@ -10,18 +14,18 @@
 	background-image: linear-gradient(top, #f4f1ee, #fff);
 	border-radius: 50%;
 	box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, .3), inset 0px 4px 1px 1px white, inset 0px -3px 1px 1px rgba(204,198,197,.5);
-	height: 60px;
-    position: relative;
-    width: 60px;
-    transition: all .3s linear;
-    display: inline-block;
-    line-height: 60px;
-    text-align: center;
-    font-size: 13px;
-    margin-top: 10px;
-    color: darken(#ededed, 20%);
-    cursor: pointer;
-    bottom: 20px;
+  position: relative;
+  height: 50px;
+  width: 50px;
+  transition: all .3s linear;
+  display: inline-block;
+  line-height: 50px;
+  text-align: center;
+  font-size: 13px;
+  margin-top: 10px;
+  color: darken(#ededed, 20%);
+  cursor: pointer;
+  bottom: 20px;
 
 	&:after {
 		color:#e9e6e4;
@@ -59,6 +63,12 @@
 			text-decoration: none;
 		}
 
+	}
+
+	@media(min-width: 450px) {
+		height: 60px;
+  	width: 60px;
+  	line-height: 60px;
 	}
 	
 }

@@ -8,9 +8,13 @@ body {
 :global(.title) {
 	font-family: 'Myriad Pro';
 	text-align : center;
-	font-size: 65px;
+	font-size: 50px;
 	text-shadow : longshadow(darken($bg, 30%), $bg, 50, 0.5);
 	color: #fff;
 	margin: 10px 20px;
 	display: inline-block;
+
+	@media(min-width: 450px) {
+		font-size: 65px;
+	}
 }
