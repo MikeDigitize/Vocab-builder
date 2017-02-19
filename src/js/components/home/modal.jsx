@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
-import { testWordLength, removeSpecialChars } from '../utils/validation';
-import { onListen } from '../utils/speech';
-import styles from '../../scss/modal';
+import { testWordLength, removeSpecialChars } from '../../utils/validation';
+import { onListen } from '../../utils/speech';
+import styles from '../../../scss/modal';
 
 export default class Modal extends Component {
 

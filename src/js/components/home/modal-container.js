@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
-import VocabDatabase from '../utils/database';
+import VocabDatabase from '../../utils/database';
 import { 
   onUserInput,
   onModalVisibilityChange, 
   onSaveItemData, 
   onEditToggle,
-  onModeChange } from '../actions/global-actions';
+  onModeChange } from '../../actions/global-actions';
 import { 
   onItemSaved, 
   onDelete, 
-  onSearchResults } from '../actions/database-actions';
+  onSearchResults } from '../../actions/database-actions';
 import Modal from './modal';
 
 function mapStateToProps(state) {

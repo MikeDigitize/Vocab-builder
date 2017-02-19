@@ -1,0 +1,78 @@
+@import 'variables';
+
+:global(.game-container) {
+	:global(.subtitle) {
+		margin-bottom: 0;
+	}
+}
+
+.gameHolder {
+	text-align: center;
+
+	.scoreContainer {
+		.score {
+			font-size: 30px;
+			margin: 0;
+			color: darken($bg, 50%);
+			.points {
+				color: darken($bg, 80%);
+			}
+		}
+	}
+
+	.questions {
+		text-align: center;
+		.question {
+			font-size: 37px;
+	    line-height: 35px;  
+	    color: #299bfd; 
+		}
+		.questionClue {
+			font-style: italic;
+	    font-size: 18px;
+	    line-height: 30px;	    
+	    &:before {
+	    	content: "“";
+	    	font-size: 35px;
+	    	font-family: sans-serif;
+	    	position: relative;
+	    	left: -5px;
+	    	font-weight: bold;
+	    	color: darken($bg, 50%);
+	    }
+	    &:after {
+	    	content: "”";
+	    	font-size: 35px;
+	    	font-family: sans-serif;
+	    	position: relative;
+	    	left: 5px;
+	    	font-weight: bold;
+	    	color: darken($bg, 50%);
+	    }
+		}
+		.answers {
+			display: block;
+			width: 300px;
+			margin: auto;
+			li {
+				font-size: 35px;
+				cursor: pointer;
+				color: darken($bg, 95%);
+				transition: color 0.4s ease-out;
+				&:global(.incorrect) {
+					text-decoration: line-through;
+				}
+				&:hover {
+					color: darken($bg, 25%);
+				}
+			}
+		}
+	}
+
+	.playAgain {
+		display: block;
+	  margin: 0px auto 15px;
+	  cursor: pointer;
+	}
+
+}

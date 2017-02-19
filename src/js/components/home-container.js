@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import VocabDatabase from '../utils/database';
 import { onAppDataLoaded } from '../actions/database-actions';
-import Home from './home';
+import Home from './home/home';
 
 function mapStateToProps(state) {
   return {

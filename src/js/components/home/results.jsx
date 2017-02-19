@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import styles from '../../scss/results';
+import styles from '../../../scss/results';
 import ResultsTable from './results-table';
 
 export default class Results extends Component {
@@ -31,7 +31,7 @@ export default class Results extends Component {
       <div className={ `${styles.resultsContainer}` }>
         <h4>Words in your gab: <span className={ `${styles.wordCount}` }>{ wordCount }</span> 
           <span 
-            className={ `${styles.lastSavedWord}` }>
+            className="subtitle">
             { lastSavedWord ? `Your latest word: ${lastSavedWord}` : '' }
           </span>
         </h4>

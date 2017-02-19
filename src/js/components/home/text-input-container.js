@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import VocabDatabase from '../utils/database';
-import { onUserInput } from '../actions/global-actions';
-import { onModalVisibilityChange } from '../actions/global-actions';
-import { onSearchResults } from '../actions/database-actions';
+import VocabDatabase from '../../utils/database';
+import { onUserInput } from '../../actions/global-actions';
+import { onModalVisibilityChange } from '../../actions/global-actions';
+import { onSearchResults } from '../../actions/database-actions';
 import TextInput from './text-input';
 
 function mapStateToProps(state) {

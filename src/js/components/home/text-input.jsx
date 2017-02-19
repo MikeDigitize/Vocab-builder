@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
-import { testWordLength } from '../utils/validation';
-import styles from '../../scss/text-input';
+import { testWordLength } from '../../utils/validation';
+import styles from '../../../scss/text-input';
 
 export default class TextInput extends Component {
 

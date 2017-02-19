@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { onModeChange } from '../actions/global-actions';
+import { onModeChange } from '../../actions/global-actions';
 import ModeControl from './mode-control';
 
 function mapDispatchToProps(dispatch) {

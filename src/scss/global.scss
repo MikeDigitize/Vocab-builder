@@ -12,9 +12,21 @@ body {
 	text-shadow : longshadow(darken($bg, 30%), $bg, 50, 0.5);
 	color: #fff;
 	margin: 10px 20px;
-	display: inline-block;
+
+	&:global(.home-title) {
+		display: inline-block;
+	}	
 
 	@media(min-width: 450px) {
 		font-size: 65px;
 	}
+}
+
+:global(.subtitle) {
+	font-size: 15px;
+	font-style: italic;
+	display: block;
+	margin-top: 5px;
+	text-align: center;
+	color: darken($bg, 45%);
 }

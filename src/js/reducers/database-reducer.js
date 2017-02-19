@@ -5,11 +5,11 @@ import {
   ON_DELETE } from '../actions/database-actions';
 
 let initialState = {
-    lastSavedWord: '',
-    wordCount: 0,
-    searchResults: [],
-    isSearching: false,
-    isAppDataLoaded: false
+  lastSavedWord: '',
+  wordCount: 0,
+  searchResults: [],
+  isSearching: false,
+  isAppDataLoaded: false
 };
 
 export default function database(state = initialState, action) {
