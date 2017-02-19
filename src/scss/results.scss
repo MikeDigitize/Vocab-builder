@@ -48,6 +48,7 @@
 					transition: color 0.3s ease-in;
 					cursor: pointer;
 					font-size: 14px;
+					user-select: none;
 					&:hover {
 						color: lighten($btn-color, 15%);
 					}

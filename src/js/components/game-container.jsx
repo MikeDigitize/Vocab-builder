@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Edit from './edit';
+import Game from './game';
 
 const mapStateToProps = state => {
   return {
@@ -7,8 +7,8 @@ const mapStateToProps = state => {
   }
 }
 
-const EditContainer = connect(
+const GameContainer = connect(
   mapStateToProps
-)(Edit);
+)(Game);
 
-export default EditContainer;
+export default GameContainer;

@@ -3,7 +3,7 @@
 .modalHolder {
 
 	* {
-		transition: all 0.35s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+		transition: all 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940);
 	}
 
 	:global(#synonyms), :global(#definition) {
@@ -73,10 +73,12 @@
     width: 80%;
     background: #fff;
     border-radius: 10px;
-    top: -100%;
-    left: 10%;
     z-index: 2;
     padding: 20px 20px 40px;
+    left: 10%;
+    transform: translateY(-260%);
+    opacity: 0;
+    will-change: transform, opacity;
 
     h2 {
     	text-align: center;
@@ -126,7 +128,8 @@
     }
 
     &:global(.active) {
-    	top: 10%;
+    	transform: translateY(-60%);
+    	opacity: 1;
 
     	@media(min-width: 600px) {
     		width: 60%;

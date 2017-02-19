@@ -11,7 +11,12 @@ export default class Home extends Component {
 	}
 
 	componentDidMount() {
-		this.props.onAppInitialise();
+
+		const { isAppDataLoaded, onAppInitialise } = this.props;
+		if(!isAppDataLoaded) {
+			onAppInitialise();
+		}
+		
 	}
 
 	render() {
