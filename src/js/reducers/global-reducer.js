@@ -3,7 +3,9 @@ import {
 	ON_USER_INPUT,
   ON_MODAL_VISIBILITY_CHANGE,
   ON_EDIT_TOGGLE,
-  ON_SAVE_ITEM_DATA } from '../actions/global-actions';
+  ON_DEFINITION_OR_SYNONYMS_UPDATE,
+  ON_DATA_TO_EDIT 
+} from '../actions/global-actions';
 import { removeSpecialChars } from '../utils/validation';
 
 let initialState = {
@@ -12,10 +14,7 @@ let initialState = {
 	searchItem: '',
   isModalVisible: false,
   isEditMode: false,
-  saveItemData: {
-    definition: '',
-    synonyms: ''
-  }
+  definitionAndSynonymsData: {}
 };
 
 export default function globals(state = initialState, action) {
@@ -43,12 +42,20 @@ export default function globals(state = initialState, action) {
         return Object.assign({}, state, {
           isEditMode: action.isEditMode
         });
-      case ON_SAVE_ITEM_DATA:
+      case ON_DEFINITION_OR_SYNONYMS_UPDATE:
         return Object.assign({}, state, {
-          saveItemData: {
+          definitionAndSynonymsData: {
             definition: removeSpecialChars(action.data.definition),
             synonyms: removeSpecialChars(action.data.synonyms)
           }
+        });
+      case ON_DATA_TO_EDIT:
+        return Object.assign({}, state, {
+          definitionAndSynonymsData: {
+            definition: action.edit.data.definition,
+            synonyms: action.edit.data.synonyms.join(', ')
+          },
+          saveItem: action.edit.word
         });
     default:
       return state

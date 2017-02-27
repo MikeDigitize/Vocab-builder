@@ -3,9 +3,8 @@ import VocabDatabase from '../../utils/database';
 import { 
 	onEditToggle, 
 	onModalVisibilityChange, 
-	onSaveItemData,
-	onModeChange,
-	onUserInput } from '../../actions/global-actions';
+	onDataToEdit 
+} from '../../actions/global-actions';
 import Results from './results';
 
 function mapStateToProps(state) {
@@ -21,12 +20,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
     onEditToggle({ isEditMode, result }) {
-    	dispatch(onSaveItemData({ 
-  			definition: result.data.definition, 
-  			synonyms: result.data.synonyms.join(', ') 
-  		}));
-  		dispatch(onModeChange('save'));
-  		dispatch(onUserInput(result.word));
+      dispatch(onDataToEdit(result));
     	dispatch(onEditToggle(isEditMode));
     	dispatch(onModalVisibilityChange(isEditMode));      
     }

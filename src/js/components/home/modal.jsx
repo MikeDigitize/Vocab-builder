@@ -12,7 +12,9 @@ export default class Modal extends Component {
 	componentWillReceiveProps(nextProps) {
 		
 		const { definitionInput } = this.refs;
-		if(!this.props.isModalVisible && nextProps.isModalVisible) {
+		const { isModalVisible } = this.props;
+
+		if(!isModalVisible && nextProps.isModalVisible) {
 			window.requestAnimationFrame(() => definitionInput.focus());			
 		}
 		
@@ -78,6 +80,7 @@ export default class Modal extends Component {
 			edit.setAttribute('data-state', 'edit');
 			edit.textContent = 'edit';
 			currentWord.contentEditable = 'false';
+
 			if(testWordLength(text, 2) && text !== saveItem) {
 				onUserInput(text);
 			}
@@ -114,16 +117,16 @@ export default class Modal extends Component {
 
 	}
 
-	onSaveItemData() {
+	onDefinitionOrSynonymsUpdate() {
 
 		const { definitionInput, synonymsInput, errorMessage } = this.refs;
-		const { onSaveItemData } = this.props;
+		const { onDefinitionOrSynonymsUpdate } = this.props;
 		const definition = definitionInput.value;
 		const synonyms = synonymsInput.value;
 		
 		definitionInput.classList.remove('modalError');
 		errorMessage.classList.add('errorHide');
-		onSaveItemData({ definition, synonyms	});
+		onDefinitionOrSynonymsUpdate({ definition, synonyms	});
 
 	}
 
@@ -140,8 +143,8 @@ export default class Modal extends Component {
 	onSave() {
 
 		const { definitionInput, synonymsInput, errorMessage } = this.refs;
-		const { saveItem, onItemSave, saveItemData, isEditMode, searchItem } = this.props;
-		let { definition, synonyms } = saveItemData;
+		const { saveItem, onItemSave, definitionAndSynonymsData, isEditMode, searchItem } = this.props;
+		let { definition, synonyms } = definitionAndSynonymsData;
 
 		if(!definition.length) {
 			definitionInput.classList.add('modalError');
@@ -184,7 +187,9 @@ export default class Modal extends Component {
 
 	render() {
 
-		const { onModalClose, saveItem, isEditMode, saveItemData } = this.props;
+		const { onModalClose, saveItem, isEditMode, definitionAndSynonymsData } = this.props;
+		console.log(saveItem);
+		
 		return (
 		  <div className={ `${styles.modalHolder}` } aria-hidden="true">
 				<div className="vocabModal" ref="modal">	 	
@@ -211,8 +216,8 @@ export default class Modal extends Component {
 									id="definition" 
 									ref="definitionInput" 
 									rows="3"
-									value={ saveItemData.definition }
-									onChange={ this.onSaveItemData.bind(this) }
+									value={ definitionAndSynonymsData.definition }
+									onChange={ this.onDefinitionOrSynonymsUpdate.bind(this) }
 									aria-describedby="definitionHelp" 
 									placeholder={ `Define ${saveItem}...` }>
 								</textarea>
@@ -236,8 +241,8 @@ export default class Modal extends Component {
 										className="form-control" 
 										id="synonyms"
 										ref="synonymsInput"
-										value={ saveItemData.synonyms } 
-										onChange={ this.onSaveItemData.bind(this) }
+										value={ definitionAndSynonymsData.synonyms } 
+										onChange={ this.onDefinitionOrSynonymsUpdate.bind(this) }
     								aria-describedby="synonymHelp"
     								placeholder={ `Synonyms for ${saveItem}...` }/>
 									<small 
@@ -281,12 +286,11 @@ Modal.propTypes = {
 	isModalVisible: PropTypes.bool.isRequired,
   saveItem: PropTypes.string.isRequired,
   onUserInput: PropTypes.func.isRequired,
-  onItemSave: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
-  onSaveItemData: PropTypes.func.isRequired,
-  saveItemData: PropTypes.shape({
-  	definition: PropTypes.string.isRequired,
-  	synonyms: PropTypes.string.isRequired
+  onDefinitionOrSynonymsUpdate: PropTypes.func.isRequired,
+  definitionAndSynonymsData: PropTypes.shape({
+  	definition: PropTypes.string,
+  	synonyms: PropTypes.string
   }).isRequired,
   onEditToggle: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

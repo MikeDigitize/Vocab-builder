@@ -22,8 +22,14 @@ export function onEditToggle(isEditMode) {
   return { type: ON_EDIT_TOGGLE, isEditMode };
 }
 
-export const ON_SAVE_ITEM_DATA = 'ON_SAVE_ITEM_DATA';
+export const ON_DEFINITION_OR_SYNONYMS_UPDATE = 'ON_DEFINITION_OR_SYNONYMS_UPDATE';
 
-export function onSaveItemData(data) {
-  return { type: ON_SAVE_ITEM_DATA, data };
+export function onDefinitionOrSynonymsUpdate(data) {
+  return { type: ON_DEFINITION_OR_SYNONYMS_UPDATE, data };
+}
+
+export const ON_DATA_TO_EDIT = 'ON_DATA_TO_EDIT';
+
+export function onDataToEdit(edit) {
+	return { type: ON_DATA_TO_EDIT, edit };
 }

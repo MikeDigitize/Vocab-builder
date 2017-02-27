@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Link,
-  Switch
+  Switch 
 } from 'react-router-dom';
 import HomeContainer from './home-container';
 import GameContainer from './game-container';

@@ -3,13 +3,16 @@ import VocabDatabase from '../../utils/database';
 import { 
   onUserInput,
   onModalVisibilityChange, 
-  onSaveItemData, 
+  onDefinitionOrSynonymsUpdate, 
   onEditToggle,
-  onModeChange } from '../../actions/global-actions';
+  onModeChange,
+  onDataToEdit
+} from '../../actions/global-actions';
 import { 
   onItemSaved, 
   onDelete, 
-  onSearchResults } from '../../actions/database-actions';
+  onSearchResults 
+} from '../../actions/database-actions';
 import Modal from './modal';
 
 function mapStateToProps(state) {
@@ -19,7 +22,7 @@ function mapStateToProps(state) {
     isModalVisible: state.globals.isModalVisible,
     isSearching: state.database.isSearching,
     isEditMode: state.globals.isEditMode,
-    saveItemData: state.globals.saveItemData
+    definitionAndSynonymsData: state.globals.definitionAndSynonymsData
   };
 }
 
@@ -28,12 +31,12 @@ function mapDispatchToProps(dispatch) {
   	onUserInput(value) {
       dispatch(onUserInput(value));
     },
-    onSaveItemData(data) {
-      dispatch(onSaveItemData(data));
+    onDefinitionOrSynonymsUpdate(data) {
+      dispatch(onDefinitionOrSynonymsUpdate(data));
     },
     onModalClose() {
       dispatch(onModalVisibilityChange(false));
-      dispatch(onSaveItemData({ definition: '', synonyms: '' }));
+      dispatch(onDefinitionOrSynonymsUpdate({ definition: '', synonyms: '' }));
     },
     onItemSave({ item, isEditMode, searchItem }) {
       const lastSavedWord = Object.keys(item)[0];
@@ -67,7 +70,7 @@ function mapDispatchToProps(dispatch) {
         }            
         dispatch(onItemSaved({ lastSavedWord, wordCount }));
         dispatch(onUserInput(''));
-        dispatch(onSaveItemData({ 
+        dispatch(onDefinitionOrSynonymsUpdate({ 
           definition: '', 
           synonyms: '' 
         }));
@@ -78,12 +81,10 @@ function mapDispatchToProps(dispatch) {
       });
     },
     onEditToggle({ isEditMode }) {
-      dispatch(onSaveItemData({ 
+      dispatch(onDefinitionOrSynonymsUpdate({ 
         definition: '', 
         synonyms: '' 
       }));
-      dispatch(onUserInput(''));
-      dispatch(onModeChange('search'));  
       dispatch(onEditToggle(isEditMode));
       dispatch(onModalVisibilityChange(isEditMode));      
     },
