@@ -19,23 +19,30 @@ function mapDispatchToProps(dispatch) {
       dispatch(onUserInput(value));
     },
     onSearch(searchItem) {
+
 			let searchResults = [];
+
 			function onDatabaseSearched() {
 				const isSearching = !!searchItem.length; 
 				dispatch(onSearchResults({ searchResults, isSearching }));
 			}
+
 			if(searchItem.length) {
-				VocabDatabase.iterate(function(data, word) {
-					const find = new RegExp(`^${searchItem}`, 'i');
-					if(word.match(find)) {
-						searchResults.push({ word, data });
-					}
-				})
-				.then(onDatabaseSearched);
+
+				VocabDatabase
+					.iterate(function(data, word) {
+						const find = new RegExp(`^${searchItem}`, 'i');
+						if(word.match(find)) {
+							searchResults.push({ word, data });
+						}
+					})
+					.then(onDatabaseSearched);
+					
 			}
 			else {
 				onDatabaseSearched();
-			}			
+			}		
+
 		},
 		onSubmitItem() {
       dispatch(onModalVisibilityChange(true));

@@ -14,7 +14,8 @@ let initialState = {
 	searchItem: '',
   isModalVisible: false,
   isEditMode: false,
-  definitionAndSynonymsData: {}
+  definitionAndSynonymsData: { definition: '', synonyms: '' },
+  editItem: ''
 };
 
 export default function globals(state = initialState, action) {
@@ -30,6 +31,11 @@ export default function globals(state = initialState, action) {
 		        saveItem: removeSpecialChars(action.value).toLowerCase()
 		      });
     		case 'search':
+          if(state.isEditMode) {
+            return Object.assign({}, state, {
+              editItem: removeSpecialChars(action.value).toLowerCase()
+            });
+          }
     			return Object.assign({}, state, {
 		        searchItem: removeSpecialChars(action.value).toLowerCase()
 		      });
@@ -55,7 +61,7 @@ export default function globals(state = initialState, action) {
             definition: action.edit.data.definition,
             synonyms: action.edit.data.synonyms.join(', ')
           },
-          saveItem: action.edit.word
+          editItem: action.edit.word
         });
     default:
       return state

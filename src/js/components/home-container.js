@@ -12,17 +12,24 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onAppInitialise() {
+
       let lastSavedWord = '';
-      VocabDatabase.iterate(function(data, word) {
-        if(data.isLatestWord) {
-          lastSavedWord = word;
-        }
-      })
-      .then(() => VocabDatabase.keys())
-      .then(function(keys) {
-        const wordCount = keys.length;  
-        dispatch(onAppDataLoaded({ wordCount, lastSavedWord }));          
-      });
+
+      VocabDatabase
+        .iterate(function(data, word) {
+
+          if(data.isLatestWord) {
+            lastSavedWord = word;
+          }
+
+        })
+        .then(() => VocabDatabase.keys())
+        .then(function(keys) {
+
+          const wordCount = keys.length;  
+          dispatch(onAppDataLoaded({ wordCount, lastSavedWord }));   
+                 
+        });
     }
   };
 };

@@ -22,7 +22,8 @@ function mapStateToProps(state) {
     isModalVisible: state.globals.isModalVisible,
     isSearching: state.database.isSearching,
     isEditMode: state.globals.isEditMode,
-    definitionAndSynonymsData: state.globals.definitionAndSynonymsData
+    definitionAndSynonymsData: state.globals.definitionAndSynonymsData,
+    editItem: state.globals.editItem
   };
 }
 
@@ -35,67 +36,115 @@ function mapDispatchToProps(dispatch) {
       dispatch(onDefinitionOrSynonymsUpdate(data));
     },
     onModalClose() {
+
       dispatch(onModalVisibilityChange(false));
       dispatch(onDefinitionOrSynonymsUpdate({ definition: '', synonyms: '' }));
+
     },
     onItemSave({ item, isEditMode, searchItem }) {
+
       const lastSavedWord = Object.keys(item)[0];
       item[lastSavedWord].isLatestWord = true;
-      VocabDatabase.iterate(function(data, word) {
-        if(data.isLatestWord) {
-          data.isLatestWord = false;
-          VocabDatabase.set(word, data);
-        }
-      })
-      .then(() => VocabDatabase.set(lastSavedWord, item[lastSavedWord]))
-      .then(() => VocabDatabase.keys())
-      .then(function(keys) {
-        const wordCount = keys.length; 
-        let searchResults = [];
-        function onDatabaseSearched() {
-          const isSearching = !!searchItem.length; 
-          dispatch(onSearchResults({ searchResults, isSearching }));
-        }
-        if(searchItem.length) {
-          VocabDatabase.iterate(function(data, word) {
-            const find = new RegExp(`^${searchItem}`, 'i');
-            if(word.match(find)) {
-              searchResults.push({ word, data });
+
+      VocabDatabase
+        .iterate(function(data, word) {
+          if(data.isLatestWord) {
+            data.isLatestWord = false;
+            VocabDatabase.set(word, data);
+          }
+        })
+        .then(() => VocabDatabase.set(lastSavedWord, item[lastSavedWord]))
+        .then(() => VocabDatabase.keys())
+        .then(function(keys) {
+
+          const wordCount = keys.length; 
+          let searchResults = [];
+
+          function onDatabaseSearched() {
+            const isSearching = !!searchItem.length; 
+            dispatch(onSearchResults({ searchResults, isSearching }));
+            dispatch(onItemSaved({ lastSavedWord, wordCount }));
+            dispatch(onDefinitionOrSynonymsUpdate({ 
+              definition: '', 
+              synonyms: '' 
+            }));
+
+            if(!isEditMode) {
+              dispatch(onUserInput(''));
             }
-          })
-          .then(onDatabaseSearched);
-        }
-        else {
-          onDatabaseSearched();
-        }            
-        dispatch(onItemSaved({ lastSavedWord, wordCount }));
-        dispatch(onUserInput(''));
-        dispatch(onDefinitionOrSynonymsUpdate({ 
-          definition: '', 
-          synonyms: '' 
-        }));
-        if(isEditMode) {
-          dispatch(onModeChange('search')); 
-        }
-        dispatch(onModalVisibilityChange(false));
-      });
+
+            dispatch(onModalVisibilityChange(false));
+            dispatch(onEditToggle(false));
+          }
+
+          if(searchItem.length) {
+
+            VocabDatabase
+              .iterate(function(data, word) {
+                const find = new RegExp(`^${searchItem}`, 'i');
+                if(word.match(find)) {
+                  searchResults.push({ word, data });
+                }
+              })
+              .then(onDatabaseSearched);
+
+          }
+          else {
+            onDatabaseSearched();
+          } 
+
+        });
+
     },
     onEditToggle({ isEditMode }) {
+
       dispatch(onDefinitionOrSynonymsUpdate({ 
         definition: '', 
         synonyms: '' 
       }));
       dispatch(onEditToggle(isEditMode));
-      dispatch(onModalVisibilityChange(isEditMode));      
+      dispatch(onModalVisibilityChange(isEditMode));    
+
     },
-    onDelete({ saveItem, onEditToggle }) {
-      VocabDatabase.remove(saveItem)
-      .then(() => VocabDatabase.keys())
-      .then(function(keys) {
-        const wordCount = keys.length;
-        dispatch(onDelete({ saveItem, wordCount }));
-        onEditToggle({ isEditMode: false });
-      });
+    onDelete({ currentItem, onEditToggle, searchItem }) {
+
+      VocabDatabase
+        .remove(currentItem)
+        .then(() => VocabDatabase.keys())
+        .then(function(keys) {
+          const wordCount = keys.length;
+          dispatch(onDelete({ currentItem, wordCount }));
+        })
+        .then(() => VocabDatabase.keys())
+        .then(function(keys) {
+
+          const wordCount = keys.length; 
+          let searchResults = [];
+
+          function onDatabaseSearched() {
+            const isSearching = !!searchItem.length; 
+            dispatch(onSearchResults({ searchResults, isSearching }));
+            onEditToggle({ isEditMode: false });
+          }
+
+          if(searchItem.length) {
+
+            VocabDatabase
+              .iterate(function(data, word) {
+                const find = new RegExp(`^${searchItem}`, 'i');
+                if(word.match(find)) {
+                  searchResults.push({ word, data });
+                }
+              })
+              .then(onDatabaseSearched);
+
+          }
+          else {
+            onDatabaseSearched();
+          }  
+
+        });
+
     }
   }
 }

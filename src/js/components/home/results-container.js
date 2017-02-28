@@ -20,9 +20,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
     onEditToggle({ isEditMode, result }) {
+
       dispatch(onDataToEdit(result));
     	dispatch(onEditToggle(isEditMode));
-    	dispatch(onModalVisibilityChange(isEditMode));      
+    	dispatch(onModalVisibilityChange(isEditMode));  
+          
     }
 	}
 }

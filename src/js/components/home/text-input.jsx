@@ -61,6 +61,7 @@ export default class TextInput extends Component {
   render() {
 
     const { mode, saveItem, searchItem } = this.props;
+    
     return (
       <div>
         <div className="form-inline">

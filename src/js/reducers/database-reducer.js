@@ -2,7 +2,8 @@ import {
   ON_APP_DATA_LOADED, 
   ON_ITEM_SAVED,
   ON_SEARCH_RESULTS,
-  ON_DELETE } from '../actions/database-actions';
+  ON_DELETE 
+} from '../actions/database-actions';
 
 let initialState = {
   lastSavedWord: '',
