@@ -33,9 +33,7 @@ export default function database(state = initialState, action) {
       });
     case ON_DELETE:
       return Object.assign({}, state, {
-        wordCount: action.data.wordCount,
-        searchResults: [],
-        lastSavedWord: state.lastSavedWord === action.data.saveItem ? '' : state.lastSavedWord
+        wordCount: action.wordCount
       });
     default:
       return state

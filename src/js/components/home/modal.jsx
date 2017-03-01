@@ -134,12 +134,12 @@ export default class Modal extends Component {
 
 	onDelete() {
 
-		const { onDelete, saveItem, onEditToggle, isEditMode, editItem, searchItem } = this.props;
+		const { onDelete, saveItem, isEditMode, editItem, searchItem } = this.props;
 		const currentItem = isEditMode ? editItem : saveItem;
 		const proceed = confirm(`Are you sure you want to delete ${currentItem}?`);
 
 		if(proceed) {
-			onDelete({ currentItem, onEditToggle, searchItem });
+			onDelete({ currentItem, searchItem });
 		}		
 
 	}

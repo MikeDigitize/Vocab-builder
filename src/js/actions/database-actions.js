@@ -18,6 +18,6 @@ export function onSearchResults(data) {
 
 export const ON_DELETE = 'ON_DELETE';
 
-export function onDelete(data) {
-	return { type: ON_DELETE, data };
+export function onDelete(wordCount) {
+	return { type: ON_DELETE, wordCount };
 }

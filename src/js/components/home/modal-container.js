@@ -46,6 +46,7 @@ function mapDispatchToProps(dispatch) {
       const lastSavedWord = Object.keys(item)[0];
       item[lastSavedWord].isLatestWord = true;
 
+      // save new word and update latest item flag
       VocabDatabase
         .iterate(function(data, word) {
           if(data.isLatestWord) {
@@ -55,12 +56,15 @@ function mapDispatchToProps(dispatch) {
         })
         .then(() => VocabDatabase.set(lastSavedWord, item[lastSavedWord]))
         .then(() => VocabDatabase.keys())
+
+        // update search results (can save from edit mode so is necessary)
         .then(function(keys) {
 
           const wordCount = keys.length; 
           let searchResults = [];
 
           function onDatabaseSearched() {
+
             const isSearching = !!searchItem.length; 
             dispatch(onSearchResults({ searchResults, isSearching }));
             dispatch(onItemSaved({ lastSavedWord, wordCount }));
@@ -69,12 +73,14 @@ function mapDispatchToProps(dispatch) {
               synonyms: '' 
             }));
 
+            // if not in edit mode reset current save item as it's now been saved
             if(!isEditMode) {
               dispatch(onUserInput(''));
             }
 
             dispatch(onModalVisibilityChange(false));
             dispatch(onEditToggle(false));
+
           }
 
           if(searchItem.length) {
@@ -106,25 +112,50 @@ function mapDispatchToProps(dispatch) {
       dispatch(onModalVisibilityChange(isEditMode));    
 
     },
-    onDelete({ currentItem, onEditToggle, searchItem }) {
+    onDelete({ currentItem, searchItem }) {
 
+      let isLatestWord = false;
+      let wordCount;
+
+      // check if word to delete is the last saved word
       VocabDatabase
-        .remove(currentItem)
-        .then(() => VocabDatabase.keys())
-        .then(function(keys) {
-          const wordCount = keys.length;
-          dispatch(onDelete({ currentItem, wordCount }));
+        .iterate(function(data, word) {
+          if(data.isLatestWord) {
+            if(word === currentItem) {
+              isLatestWord = true;
+            }
+          }
         })
-        .then(() => VocabDatabase.keys())
-        .then(function(keys) {
 
-          const wordCount = keys.length; 
+        // remove word from database
+        .then(() => VocabDatabase.remove(currentItem))
+        .then(() => VocabDatabase.keys())
+
+        // save new word count and set latest word if necessary
+        .then(function(keys) {
+          wordCount = keys.length;
+          dispatch(onDelete(wordCount));
+          if(isLatestWord) {
+            dispatch(onItemSaved({ lastSavedWord: '', wordCount }));
+          }
+        })
+
+        // get updated search results 
+        .then(function() {
+
           let searchResults = [];
 
           function onDatabaseSearched() {
             const isSearching = !!searchItem.length; 
             dispatch(onSearchResults({ searchResults, isSearching }));
-            onEditToggle({ isEditMode: false });
+
+            // close modal
+            dispatch(onDefinitionOrSynonymsUpdate({ 
+              definition: '', 
+              synonyms: '' 
+            }));
+            dispatch(onEditToggle(false));
+            dispatch(onModalVisibilityChange(false));  
           }
 
           if(searchItem.length) {
